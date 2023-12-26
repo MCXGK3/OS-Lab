@@ -595,7 +595,11 @@ int rfs_link(struct vinode *parent, struct dentry *sub_dentry, struct vinode *li
   //    rfs_add_direntry here.
   // 3) persistent the changes to disk. you can use rfs_write_back_vinode here.
   //
-  panic("You need to implement the code for creating a hard link in lab4_3.\n" );
+  link_node->nlinks++;
+  rfs_add_direntry(parent,sub_dentry->name,link_node->inum);
+  rfs_write_back_vinode(parent);
+  rfs_write_back_vinode(link_node);
+  return 0;
 }
 
 //
@@ -791,8 +795,8 @@ int rfs_readdir(struct vinode *dir_vinode, struct dir *dir, int *offset) {
   // the method of returning is to popular proper members of "dir", more specifically,
   // dir->name and dir->inum.
   // note: DO NOT DELETE CODE BELOW PANIC.
-  strcpy(dir->name,dir_cache->dir_base_addr->name);
-  dir->inum=dir_cache->dir_base_addr->inum;
+  strcpy(dir->name,p_direntry->name);
+  dir->inum=p_direntry->inum;
   //panic("You need to implement the code for reading a directory entry of rfs in lab4_2.\n" );
 
   // DO NOT DELETE CODE BELOW.
