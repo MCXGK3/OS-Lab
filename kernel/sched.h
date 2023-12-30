@@ -8,5 +8,6 @@
 
 void insert_to_ready_queue( process* proc );
 void schedule();
+int do_wait(int id);
 
 #endif

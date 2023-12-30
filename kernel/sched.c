@@ -71,3 +71,36 @@ void schedule() {
   sprint( "going to schedule process %d to run.\n", current->pid );
   switch_to( current );
 }
+
+int do_wait(int id){
+  if(id<-1||id==0) return -1;
+  else if(id==-1){
+    process *parent=current;
+    process *p;
+    for(p=ready_queue_head;p!=NULL;p=p->queue_next){
+        if(p->parent==parent){
+          parent->status=BLOCKED;
+          p->wait=1;
+          schedule();
+          return p->pid;
+        }
+    }
+    return -1;
+  }
+  else{
+    process *parent=current;
+    process *p;
+    for(p=ready_queue_head;p!=NULL;p=p->queue_next){
+      if(p->pid==id){
+        if(p->parent==parent){
+          parent->status=BLOCKED;
+          p->wait=1;
+          schedule();
+          return p->pid;
+        }
+        else{return -1;}
+      }
+    } 
+  return-1;
+  }
+}

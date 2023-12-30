@@ -150,6 +150,7 @@ process* alloc_process() {
   procs[i].mapped_info[HEAP_SEGMENT].seg_type = HEAP_SEGMENT;
 
   procs[i].total_mapped_region = 4;
+  procs[i].wait=0;
 
   // return after initialization.
   return &procs[i];
@@ -241,6 +242,18 @@ int do_fork( process* parent)
         child->mapped_info[child->total_mapped_region].seg_type = CODE_SEGMENT;
         child->total_mapped_region++;
         break;
+      case DATA_SEGMENT:{
+        void* childp=alloc_page();
+        memcpy(childp, (void*)lookup_pa(parent->pagetable, parent->mapped_info[i].va), PGSIZE);
+        user_vm_map((pagetable_t)child->pagetable, parent->mapped_info[i].va, PGSIZE, (uint64)childp,
+                      prot_to_type(PROT_WRITE | PROT_READ, 1));
+        child->mapped_info[child->total_mapped_region].va=parent->mapped_info[i].va;
+        child->mapped_info[child->total_mapped_region].npages=parent->mapped_info[i].npages;
+        child->mapped_info[child->total_mapped_region].seg_type=DATA_SEGMENT;
+        child->total_mapped_region++;
+        break;
+      }
+
     }
   }
 
