@@ -32,11 +32,15 @@ int vfs_link(const char *oldpath, const char *newpath);
 int vfs_unlink(const char *path);
 int vfs_close(struct file *file);
 
+
 // directory interfaces
 struct file *vfs_opendir(const char *path);
 int vfs_readdir(struct file *file, struct dir *dir);
 int vfs_mkdir(const char *path);
 int vfs_closedir(struct file *file);
+
+int vfs_rcwd(char *path);
+int vfs_ccwd(const char *path);
 
 /**** vfs abstract object types ****/
 // system root direntry

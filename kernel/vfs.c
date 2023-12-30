@@ -9,6 +9,7 @@
 #include "util/string.h"
 #include "util/types.h"
 #include "util/hash_table.h"
+#include "process.h"
 
 struct dentry *vfs_root_dentry;               // system root direntry
 struct super_block *vfs_sb_list[MAX_MOUNTS];  // system superblock list
@@ -502,6 +503,35 @@ int vfs_closedir(struct file *file) {
   return 0;
 }
 
+int vfs_rcwd(char *path){
+  struct dentry *parent= current->pfiles->cwd;
+  char name[MAX_FILE_NAME_LEN];
+  int length=0;
+  int temp;
+  strcpy(path,parent->name);
+  while(parent->parent!=NULL){
+    temp=strlen(parent->parent->name);
+    strcpy(name,parent->parent->name);
+    strcpy(name+temp,path);
+    strcpy(path,name);
+    parent=parent->parent;
+  }
+  return 0;
+}
+
+int vfs_ccwd(const char *path){
+  struct dentry *parent = vfs_root_dentry;
+  char miss_name[MAX_PATH_LEN];
+
+  // lookup the dir
+  struct dentry *file_dentry = lookup_final_dentry(path, &parent, miss_name);
+  if(file_dentry==NULL){
+    return -1;
+  }
+  current->pfiles->cwd=file_dentry;
+  return 0;
+}
+
 //
 // lookup the "path" and return its dentry (or NULL if not found).
 // the lookup starts from parent, and stop till the full "path" is parsed.
@@ -510,6 +540,7 @@ int vfs_closedir(struct file *file) {
 struct dentry *lookup_final_dentry(const char *path, struct dentry **parent,
                                    char *miss_name) {
   char path_copy[MAX_PATH_LEN];
+  
   strcpy(path_copy, path);
 
   // split the path, and retrieves a token at a time.
@@ -520,8 +551,21 @@ struct dentry *lookup_final_dentry(const char *path, struct dentry **parent,
   // at its three continuous invocations.
   char *token = strtok(path_copy, "/");
   struct dentry *this = *parent;
-
+  if(!strcmp(token,".")){
+      this=current->pfiles->cwd;
+    }
+    else if(!strcmp(token,"..")){
+      this=current->pfiles->cwd->parent;
+    }
+  token = strtok(NULL, "/");
   while (token != NULL) {
+    if(!strcmp(token,".")){
+      this=this;
+    }
+    else if(!strcmp(token,"..")){
+      this=this->parent;
+    }
+    else{
     *parent = this;
     this = hash_get_dentry((*parent), token);  // try hash first
     if (this == NULL) {
@@ -552,7 +596,7 @@ struct dentry *lookup_final_dentry(const char *path, struct dentry **parent,
 
       hash_put_dentry(this);
     }
-
+    }
     // get next token
     token = strtok(NULL, "/");
   }
@@ -719,5 +763,6 @@ struct vinode *default_alloc_vinode(struct super_block *sb) {
   vinode->size = 0;
   return vinode;
 }
+
 
 struct file_system_type *fs_list[MAX_SUPPORTED_FS];
