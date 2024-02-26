@@ -13,6 +13,10 @@ typedef struct elf_info_t {
   process *p;
 } elf_info;
 
+elf_symbol symbols[64];
+char sym_names[64][32];
+int sym_count;
+
 //
 // the implementation of allocater. allocates memory space for later segment loading
 //
@@ -101,6 +105,60 @@ static size_t parse_args(arg_buf *arg_bug_msg) {
   return pk_argc - arg;
 }
 
+void load_func_name(elf_ctx *ctx)
+{
+  Elf64_Shdr sym_sh;
+  Elf64_Shdr str_sh;
+  Elf64_Shdr shstr_sh;
+  Elf64_Shdr temp_sh;
+
+  int sect_num = ctx->ehdr.shnum;
+  uint64 shstr_offset = ctx->ehdr.shoff + ctx->ehdr.shstrndx * sizeof(Elf64_Shdr);
+  elf_fpread(ctx, (void *)&shstr_sh, sizeof(shstr_sh), shstr_offset);
+  char temp_str[shstr_sh.sh_size];
+  uint64 shstr_sect_off = shstr_sh.sh_offset;
+  elf_fpread(ctx, &temp_str, shstr_sh.sh_size, shstr_sect_off);
+  //sprint("%d %d\n", shstr_offset, shstr_sect_off);
+
+
+  for(int i=0; i<sect_num; i++) {
+    elf_fpread(ctx, (void*)&temp_sh, sizeof(temp_sh), ctx->ehdr.shoff+i*ctx->ehdr.shentsize);
+    uint32 type = temp_sh.sh_type;
+    //sprint("%s\n",temp_str+temp_sh.sh_name);
+    
+    if(!strcmp(temp_str+temp_sh.sh_name,".symtab")){
+      sym_sh = temp_sh;
+    } 
+    else if(!strcmp(temp_str+temp_sh.sh_name,".strtab"))
+    {
+      str_sh = temp_sh;
+    }
+  }
+
+  uint64 str_sect_off = str_sh.sh_offset;
+  uint64 sym_num = sym_sh.sh_size/sizeof(elf_symbol);
+  int count = 0;
+  for(int i=0; i<sym_num; i++) {
+    elf_symbol symbol;
+    elf_fpread(ctx, (void*)&symbol, sizeof(symbol), sym_sh.sh_offset+i*sizeof(elf_symbol));
+
+    /*
+    char name[32];
+    elf_fpread(ctx, (void*)&name, sizeof(name), str_sect_off+symbol.st_name);
+    sprint("%s\n",name);
+    sprint("%d\n",symbol.st_info);*/
+    
+
+    if(symbol.st_info == 18){    
+      char symname[32];
+      elf_fpread(ctx, (void*)&symname, sizeof(symname), str_sect_off+symbol.st_name);
+      symbols[count++] = symbol;
+      strcpy(sym_names[count-1], symname);
+    }
+  }
+  sym_count = count;
+}
+
 //
 // load the elf of user application, by using the spike file interface.
 //
@@ -132,6 +190,8 @@ void load_bincode_from_host_elf(process *p) {
 
   // entry (virtual, also physical in lab1_x) address
   p->trapframe->epc = elfloader.ehdr.entry;
+
+  load_func_name(&elfloader);
 
   // close the host spike file
   spike_file_close( info.f );
