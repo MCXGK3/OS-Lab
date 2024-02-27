@@ -6,6 +6,19 @@
 
 #define MAX_CMDLINE_ARGS 64
 
+typedef uint64	Elf64_Addr;
+typedef uint16	Elf64_Half;
+typedef uint16	Elf64_SHalf;
+typedef uint64	Elf64_Off;
+typedef uint32	Elf64_Sword;
+typedef uint32	Elf64_Word;
+typedef uint64	Elf64_Xword;
+typedef uint64	Elf64_Sxword;
+
+
+#define SHT_SYMTAB          2        /* Symbol table */
+#define SHT_STRTAB          3        /* String table */
+
 // elf header structure
 typedef struct elf_header_t {
   uint32 magic;

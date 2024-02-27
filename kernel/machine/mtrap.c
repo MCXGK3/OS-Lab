@@ -1,6 +1,7 @@
 #include "kernel/riscv.h"
 #include "kernel/process.h"
 #include "spike_interface/spike_utils.h"
+#include "util/string.h"
 
 static void handle_instruction_access_fault() { panic("Instruction access fault!"); }
 
@@ -24,11 +25,41 @@ static void handle_timer() {
   write_csr(sip, SIP_SSIP);
 }
 
+void debug(){
+  uint64 epc=read_csr(mepc);
+  for(int i=0;i<current->line_ind;i++){
+    if(epc==(current->line+i)->addr){
+      addr_line temp=*(current->line+i);
+      char dir[100];
+      strcpy(dir,*(current->dir+(current->file+temp.file)->dir));
+      int len=strlen(dir);
+      int line=temp.line;
+      dir[len]='/';
+      strcpy(dir+len+1,(current->file+temp.file)->file);
+      sprint("Runtime error at %s:%d\n",dir,temp.line);
+      spike_file_t* f = spike_file_open(dir, O_RDONLY, 0);
+      char content[2048];
+      spike_file_read(f,content,sizeof(content));
+      for(int i=0,k=1;i<sizeof(content);i++){
+        if(k==line){sprint("%c",content[i]);}
+        if(content[i]=='\n'){
+          k++;
+        }
+        if(k>line){break;}
+      }
+      spike_file_close(f);
+      break;
+    }
+  }
+  return ;
+}
 //
 // handle_mtrap calls a handling function according to the type of a machine mode interrupt (trap).
 //
 void handle_mtrap() {
   uint64 mcause = read_csr(mcause);
+  
+  debug();
   switch (mcause) {
     case CAUSE_MTIMER:
       handle_timer();
