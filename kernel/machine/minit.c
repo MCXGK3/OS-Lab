@@ -7,6 +7,8 @@
 #include "kernel/config.h"
 #include "spike_interface/spike_utils.h"
 
+#include "kernel/sync_utils.h"
+
 //
 // global variables are placed in the .data section.
 // stack0 is the privilege mode stack(s) of the proxy kernel on CPU(s)
@@ -16,6 +18,8 @@
 // labs.
 //
 __attribute__((aligned(16))) char stack0[4096 * NCPU];
+
+int i=0;
 
 // sstart() is the supervisor state entry point defined in kernel/kernel.c
 extern void s_start();
@@ -94,12 +98,21 @@ void m_start(uintptr_t hartid, uintptr_t dtb) {
   // init the spike file interface (stdin,stdout,stderr)
   // functions with "spike_" prefix are all defined in codes under spike_interface/,
   // sprint is also defined in spike_interface/spike_utils.c
+  
+  if(hartid==0){
   spike_file_init();
-  sprint("In m_start, hartid:%d\n", hartid);
-
   // init HTIF (Host-Target InterFace) and memory by using the Device Table Blob (DTB)
   // init_dtb() is defined above.
   init_dtb(dtb);
+  }
+  //sprint("hartid=%d i=%d\n",hartid,i);
+  sync_barrier(&i,NCPU);
+  write_tp(hartid);
+  sprint("hartid=%d i=%d\n",hartid,i);
+  sprint("In m_start, hartid:%d\n", hartid);
+  
+  
+  
 
   // save the address of trap frame for interrupt in M mode to "mscratch". added @lab1_2
   write_csr(mscratch, &g_itrframe);
