@@ -27,6 +27,11 @@ process* current = NULL;
 // points to the first free page in our simple heap. added @lab2_2
 uint64 g_ufree_page = USER_FREE_ADDRESS_START;
 
+memblo mems[32];
+int memsnum=0;
+memblo usedmems[32];
+int usedmemsnum=0;
+
 //
 // switch to a user-mode process
 //

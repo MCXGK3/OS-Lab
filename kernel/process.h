@@ -28,6 +28,13 @@ typedef struct process_t {
   trapframe* trapframe;
 }process;
 
+typedef struct memblo_t
+{
+  uint64 address;
+  uint64 size;
+}memblo;
+
+
 // switch to run user app
 void switch_to(process*);
 
@@ -36,5 +43,10 @@ extern process* current;
 
 // address of the first free page in our simple heap. added @lab2_2
 extern uint64 g_ufree_page;
+
+extern memblo mems[32];
+extern int memsnum;
+extern memblo usedmems[32];
+extern int usedmemsnum;
 
 #endif
