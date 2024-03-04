@@ -29,7 +29,7 @@ void switch_to(process* proc) {
   assert(proc);
   //sprint("switch hartid=%d\n",read_tp());
   current[read_tp()] = proc;
-  proc->trapframe->regs.tp=read_tp();
+  //proc->trapframe->regs.tp=read_tp();
 
   // write the smode_trap_vector (64-bit func. address) defined in kernel/strap_vector.S
   // to the stvec privilege register, such that trap handler pointed by smode_trap_vector

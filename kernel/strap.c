@@ -18,6 +18,8 @@ static void handle_syscall(trapframe *tf) {
   // in RV64G, each instruction occupies exactly 32 bits (i.e., 4 Bytes)
   tf->epc += 4;
 
+  tf->regs.tp=read_tp();
+
   // TODO (lab1_1): remove the panic call below, and call do_syscall (defined in
   // kernel/syscall.c) to conduct real operations of the kernel side for a syscall.
   // IMPORTANT: return value should be returned to user app, or else, you will encounter
@@ -57,6 +59,7 @@ void smode_trap_handler(void) {
   assert(current[read_tp()]);
   // save user process counter.
   current[read_tp()]->trapframe->epc = read_csr(sepc);
+  current[read_tp()]->trapframe->regs.tp=read_tp();
 
   // if the cause of trap is syscall from user application.
   // read_csr() and CAUSE_USER_ECALL are macros defined in kernel/riscv.h

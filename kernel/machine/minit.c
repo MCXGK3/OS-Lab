@@ -108,7 +108,6 @@ void m_start(uintptr_t hartid, uintptr_t dtb) {
   //sprint("hartid=%d i=%d\n",hartid,i);
   sync_barrier(&i,NCPU);
   write_tp(hartid);
-  sprint("hartid=%d i=%d\n",hartid,i);
   sprint("In m_start, hartid:%d\n", hartid);
   
   

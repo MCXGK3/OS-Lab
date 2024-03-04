@@ -17,17 +17,13 @@
 
 volatile int exitnum = 0;
 volatile int printuse=1;
+int now=-1;
 //
 // implement the SYS_user_print syscall
 //
 ssize_t sys_user_print(const char *buf, size_t n)
 {
-  sync_p(&printuse);
-  sprint("hartid = %d: %s", read_tp(), buf);
-  
-  sprint("%d %d\n",read_tp(),printuse);
-  sync_v(&printuse);
-  //if(read_tp()==1){sprint("ok");}
+  sprint("hartid = %d: %s", read_tp(), buf,current[read_tp()]->trapframe->regs.tp);
   return 0;
 }
 
@@ -36,17 +32,10 @@ ssize_t sys_user_print(const char *buf, size_t n)
 //
 ssize_t sys_user_exit(uint64 code)
 {
-  if(read_tp()==1){sprint("1\n");}
-  sync_p(&printuse);
-  sprint("%d\n",printuse);
+  
   sprint("hartid = %d: User exit with code:%d.\n", read_tp(), code);
-  sync_v(&printuse);
-  // in lab1, PKE considers only one app (one process).
-  // therefore, shutdown the system when the app calls exit()
-  //sprint("%d\n",exitnum);
-  sync_barrier(&exitnum, NCPU);
+  sync_barrier(&exitnum,NCPU);
   if(read_tp()==0){
-  sprint("%d\n",exitnum);
   sprint("hartid = %d: shutdown with code:%d.\n", read_tp(), code);
   shutdown(code);
   }
