@@ -5,6 +5,8 @@
 #include "util/string.h"
 #include "memlayout.h"
 #include "spike_interface/spike_utils.h"
+#include "sync_utils.h"
+#include "spike_interface/atomic.h"
 
 // _end is defined in kernel/kernel.lds, it marks the ending (virtual) address of PKE kernel
 extern char _end[];
@@ -19,6 +21,9 @@ int vm_alloc_stage[NCPU] = { 0 }; // 0 for kernel alloc, 1 for user alloc
 typedef struct node {
   struct node *next;
 } list_node;
+
+int alloc_barrier=0;
+spinlock_t  alloc_lock=SPINLOCK_INIT;
 
 // g_free_mem_list is the head of the list of free physical memory pages
 static list_node g_free_mem_list;
@@ -51,12 +56,16 @@ void free_page(void *pa) {
 // Allocates only ONE page!
 //
 void *alloc_page(void) {
+  spinlock_lock(&alloc_lock);
+  //sprint("hartid=%d barrier=%d\n",read_tp(),alloc_barrier);
   list_node *n = g_free_mem_list.next;
-  uint64 hartid = 0;
+  uint64 hartid = read_tp();
   if (vm_alloc_stage[hartid]) {
     sprint("hartid = %ld: alloc page 0x%x\n", hartid, n);
   }
   if (n) g_free_mem_list.next = n->next;
+  //sprint("hartid=%d  n=%p   g_free_mem_list.next=%p\n",hartid,n,g_free_mem_list.next);
+  spinlock_unlock(&alloc_lock);
   return (void *)n;
 }
 
