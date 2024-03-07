@@ -226,11 +226,12 @@ process* load_other_program(char* name){
 }
 ssize_t sys_user_exec(char* name){
   char * pathpa = (char*)user_va_to_pa((pagetable_t)(current->pagetable), name);
-  process* proc=load_other_program(pathpa);
-  current->status=ZOMBIE;
-  switch_to(proc);
+  char path[256];
+  strcpy(path,pathpa);
+  realloc_proc(current);
+  load_bincode_from_other_elf(current,path);
 
-  return -1;
+  return 0;
 }
 
 
