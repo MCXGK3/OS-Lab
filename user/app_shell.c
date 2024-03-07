@@ -15,7 +15,6 @@ int main(int argc, char *argv[]) {
   char *token;
   char delim[3] = " \n";
   fd = open("/shellrc", O_RDONLY);
-
   read_u(fd, buf, MAXBUF);
   close(fd);
   char *command = naive_malloc();

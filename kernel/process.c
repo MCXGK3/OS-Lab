@@ -17,6 +17,7 @@
 #include "memlayout.h"
 #include "sched.h"
 #include "spike_interface/spike_utils.h"
+#include "util/functions.h"
 
 //Two functions defined in kernel/usertrap.S
 extern char smode_trap_vector[];
@@ -150,6 +151,7 @@ process* alloc_process() {
   procs[i].mapped_info[HEAP_SEGMENT].seg_type = HEAP_SEGMENT;
 
   procs[i].total_mapped_region = 4;
+  procs[i].wait=0;
 
   // initialize files_struct
   procs[i].pfiles = init_proc_file_management();
@@ -237,7 +239,7 @@ int do_fork( process* parent)
         // DO NOT COPY THE PHYSICAL PAGES, JUST MAP THEM.
         map_pages(child->pagetable,parent->mapped_info[CODE_SEGMENT].va,PGSIZE,lookup_pa(parent->pagetable,parent->mapped_info[CODE_SEGMENT].va),prot_to_type(PROT_READ|PROT_EXEC,1));
         //panic( "You need to implement the code segment mapping of child in lab3_1.\n" );
-
+        sprint("do_fork map code segment at pa:%lx of parent to child at va:%lx.\n",lookup_pa(parent->pagetable,parent->mapped_info[CODE_SEGMENT].va),parent->mapped_info[CODE_SEGMENT].va);
         // after mapping, register the vm region (do not delete codes below!)
         child->mapped_info[child->total_mapped_region].va = parent->mapped_info[i].va;
         child->mapped_info[child->total_mapped_region].npages =
@@ -254,4 +256,79 @@ int do_fork( process* parent)
   insert_to_ready_queue( child );
 
   return child->pid;
+}
+
+int realloc_proc(process* proc){
+  user_vm_unmap(proc->pagetable,proc->mapped_info[CODE_SEGMENT].va,PGSIZE,0);
+
+
+  for(int i=ROUNDDOWN(proc->trapframe->regs.sp,PGSIZE);i<USER_STACK_TOP;i+=PGSIZE){
+    user_vm_unmap(proc->pagetable,i,PGSIZE,1);
+  }
+
+
+  int free_block_filter[MAX_HEAP_PAGES];
+  memset(free_block_filter, 0, MAX_HEAP_PAGES);
+  uint64 heap_bottom = proc->user_heap.heap_bottom;
+  for (int i = 0; i < proc->user_heap.free_pages_count; i++) {
+    int index = (proc->user_heap.free_pages_address[i] - heap_bottom) / PGSIZE;
+    free_block_filter[index] = 1;
+  }
+
+  // copy and map the heap blocks
+  for (uint64 heap_block = current->user_heap.heap_bottom;
+        heap_block < current->user_heap.heap_top; heap_block += PGSIZE) {
+    if (free_block_filter[(heap_block - heap_bottom) / PGSIZE])  // skip free blocks
+      continue;
+    user_vm_unmap(proc->pagetable,heap_block,PGSIZE,1);
+  }
+  free_page((void*)ROUNDDOWN(proc->kstack-1,PGSIZE));
+
+
+  memset(proc->trapframe, 0, sizeof(trapframe));
+
+  // page directory
+  //proc->pagetable = (pagetable_t)alloc_page();
+  //memset((void *)proc->pagetable, 0, PGSIZE);
+
+  proc->kstack = (uint64)alloc_page() + PGSIZE;   //user kernel stack top
+  uint64 user_stack = (uint64)alloc_page();       //phisical address of user stack bottom
+  proc->trapframe->regs.sp = USER_STACK_TOP;  //virtual address of user stack top
+
+  // allocates a page to record memory regions (segments)
+  memset( proc->mapped_info, 0, PGSIZE );
+
+  // map user stack in userspace
+  user_vm_map((pagetable_t)proc->pagetable, USER_STACK_TOP - PGSIZE, PGSIZE,
+    user_stack, prot_to_type(PROT_WRITE | PROT_READ, 1));
+  proc->mapped_info[STACK_SEGMENT].va = USER_STACK_TOP - PGSIZE;
+  proc->mapped_info[STACK_SEGMENT].npages = 1;
+  proc->mapped_info[STACK_SEGMENT].seg_type = STACK_SEGMENT;
+
+  proc->mapped_info[CONTEXT_SEGMENT].va = (uint64)proc->trapframe;
+  proc->mapped_info[CONTEXT_SEGMENT].npages = 1;
+  proc->mapped_info[CONTEXT_SEGMENT].seg_type = CONTEXT_SEGMENT;
+
+  // map S-mode trap vector section in user space (direct mapping as in kernel space)
+  // we assume that the size of usertrap.S is smaller than a page.
+  proc->mapped_info[SYSTEM_SEGMENT].va = (uint64)trap_sec_start;
+  proc->mapped_info[SYSTEM_SEGMENT].npages = 1;
+  proc->mapped_info[SYSTEM_SEGMENT].seg_type = SYSTEM_SEGMENT;
+
+
+  // initialize the process's heap manager
+  proc->user_heap.heap_top = USER_FREE_ADDRESS_START;
+  proc->user_heap.heap_bottom = USER_FREE_ADDRESS_START;
+  proc->user_heap.free_pages_count = 0;
+
+  // map user heap in userspace
+  proc->mapped_info[HEAP_SEGMENT].va = USER_FREE_ADDRESS_START;
+  proc->mapped_info[HEAP_SEGMENT].npages = 0;  // no pages are mapped to heap yet.
+  proc->mapped_info[HEAP_SEGMENT].seg_type = HEAP_SEGMENT;
+
+  proc->total_mapped_region = 4;
+  //proc->wait=0;
+
+
+  return 0;
 }

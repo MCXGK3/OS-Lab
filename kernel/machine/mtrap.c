@@ -12,7 +12,7 @@ static void handle_illegal_instruction() { panic("Illegal instruction!"); }
 
 static void handle_misaligned_load() { panic("Misaligned Load!"); }
 
-static void handle_misaligned_store() { panic("Misaligned AMO!"); }
+static void handle_misaligned_store() {panic("Misaligned AMO!"); }
 
 // added @lab1_3
 static void handle_timer() {

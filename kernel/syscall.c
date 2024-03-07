@@ -14,6 +14,7 @@
 #include "vmm.h"
 #include "sched.h"
 #include "proc_file.h"
+#include "elf.h"
 
 #include "spike_interface/spike_utils.h"
 
@@ -35,6 +36,11 @@ ssize_t sys_user_print(const char* buf, size_t n) {
 ssize_t sys_user_exit(uint64 code) {
   sprint("User exit with code:%d.\n", code);
   // reclaim the current process, and reschedule. added @lab3_1
+  process *parent=current->parent;
+  if(current->wait){
+    insert_to_ready_queue(parent);
+  }
+
   free_process( current );
   schedule();
   return 0;
@@ -215,6 +221,38 @@ ssize_t sys_user_unlink(char * vfn){
   return do_unlink(pfn);
 }
 
+process* load_other_program_with_para(process* proc,char* pathname,char* paraname){
+
+  load_bincode_from_other_elf_with_para(proc,pathname,paraname);
+  return proc;
+}
+
+ssize_t sys_user_exec(const char* pathname, const char * paraname){
+  char *pathpa=(char *)lookup_pa(current->pagetable,(uint64)pathname);
+  char *parapa=(char *)lookup_pa(current->pagetable,(uint64)paraname);
+  char path[512];
+  char para[512];
+  strcpy(path,pathpa);
+  strcpy(para,parapa);
+  realloc_proc(current);
+  load_other_program_with_para(current,path,para);
+  current->trapframe->regs.sp-=512;
+  strcpy((char *)user_va_to_pa(current->pagetable,(void*)current->trapframe->regs.sp),para);
+  current->trapframe->regs.a0=1;
+  uint64 sp=current->trapframe->regs.sp;
+  
+  current->trapframe->regs.sp-=8;
+  uint64* te=(uint64*)user_va_to_pa(current->pagetable,(void*)current->trapframe->regs.sp);
+  *te=sp;
+  current->trapframe->regs.a1=current->trapframe->regs.sp;
+  return 0;
+}
+
+ssize_t sys_user_wait(int id){
+  return do_wait(id);
+
+}
+
 //
 // [a0]: the syscall number; [a1] ... [a7]: arguments to the syscalls.
 // returns the code of success, (e.g., 0 means success, fail for otherwise)
@@ -263,6 +301,10 @@ long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, long a6, l
       return sys_user_link((char *)a1, (char *)a2);
     case SYS_user_unlink:
       return sys_user_unlink((char *)a1);
+    case SYS_user_exec:
+      return sys_user_exec((char *)a1,(char *)a2);
+    case SYS_user_wait:
+      return sys_user_wait(a1);
     default:
       panic("Unknown syscall %ld \n", a0);
   }
