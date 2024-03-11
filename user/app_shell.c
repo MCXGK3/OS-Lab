@@ -6,46 +6,37 @@
 #include "user_lib.h"
 #include "string.h"
 #include "util/types.h"
+#define max_para_num 7
 
 int main(int argc, char *argv[]) {
+  char buf[1024];
+  char de[2]=" ";
   printu("\n======== Shell Start ========\n\n");
-  int fd;
-  int MAXBUF = 1024;
-  char buf[MAXBUF];
-  char *token;
-  char delim[3] = " \n";
-  fd = open("/shellrc", O_RDONLY);
-  read_u(fd, buf, MAXBUF);
-  close(fd);
-  char *command = naive_malloc();
-  char *para = naive_malloc();
-  int start = 0;
-  while (1)
-  {
-    if(!start) {
-      token = strtok(buf, delim);
-      start = 1;
-    }
-    else 
-      token = strtok(NULL, delim);
-    strcpy(command, token);
-    token = strtok(NULL, delim);
-    strcpy(para, token);
-    if(strcmp(command, "END") == 0 && strcmp(para, "END") == 0)
-      break;
-    printu("Next command: %s %s\n\n", command, para);
-    printu("==========Command Start============\n\n");
-    int pid = fork();
-    if(pid == 0) {
-      int ret = exec(command, para);
-      if (ret == -1)
-      printu("exec failed!\n");
-    }
-    else
+  while(1){
+    char* token;
+    char commad[30];
+    char para[max_para_num][30];
+    int paranum=0;
+    scanu(buf);
+    token=strtok(buf,de);
+    strcpy(commad,token);
+    while (token!=NULL)
     {
-      wait(pid);
-      printu("==========Command End============\n\n");
+      token=strtok(NULL,de);
+      if(token==NULL) break;
+      if(paranum==max_para_num) {
+        printu("too many arguments!!\n");
+        goto once_over;
+      }
+      strcpy(para[paranum],token);
+      paranum++;
     }
+    printu("command:%s\n",commad);
+    for(int i=0;i<paranum;i++){
+      printu("para%d:%s\n",i+1,para[i]);
+    }
+    
+  once_over:;
   }
   exit(0);
   return 0;

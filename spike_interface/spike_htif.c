@@ -150,6 +150,8 @@ int htif_console_getchar(void) {
   return ch - 1;
 }
 
+
+
 void htif_poweroff(void) {
   while (1) {
     fromhost = 0;

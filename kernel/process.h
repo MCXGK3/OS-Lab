@@ -93,6 +93,10 @@ typedef struct process_t {
 
   int wait;
 
+  int values[64][2];
+  char sym_names[64][20];
+  int sym_count;
+
   // file system. added @lab4_1
   proc_file_management *pfiles;
 }process;

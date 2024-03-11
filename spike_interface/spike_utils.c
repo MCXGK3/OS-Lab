@@ -93,6 +93,11 @@ void poweroff(uint16_t code) {
     }
   }
 }
+char getchar(){
+  char c;
+  c=frontend_syscall(HTIFSYS_getchar,0,0,0,0,0,0,0);
+  return c;
+}
 
 void shutdown(int code) {
   sprint("System is shutting down with exit code %d.\n", code);

@@ -13,6 +13,7 @@ void poweroff(uint16 code) __attribute((noreturn));
 void sprint(const char* s, ...);
 void putstring(const char* s);
 void shutdown(int) __attribute__((noreturn));
+char getchar();
 
 #define assert(x)                              \
   ({                                           \

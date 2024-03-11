@@ -17,6 +17,7 @@
 #include "elf.h"
 
 #include "spike_interface/spike_utils.h"
+#include "spike_interface/spike_htif.h"
 
 //
 // implement the SYS_user_print syscall
@@ -118,7 +119,7 @@ ssize_t sys_user_read(int fd, char *bufva, uint64 count) {
   int i = 0;
   while (i < count) { // count can be greater than page size
     uint64 addr = (uint64)bufva + i;
-    uint64 pa = lookup_pa((pagetable_t)current->pagetable, addr);
+    uint64 pa = (uint64)user_va_to_pa((pagetable_t)current->pagetable,(void*)addr);
     uint64 off = addr - ROUNDDOWN(addr, PGSIZE);
     uint64 len = count - i < PGSIZE - off ? count - i : PGSIZE - off;
     uint64 r = do_read(fd, (char *)pa + off, len);
@@ -134,7 +135,7 @@ ssize_t sys_user_write(int fd, char *bufva, uint64 count) {
   int i = 0;
   while (i < count) { // count can be greater than page size
     uint64 addr = (uint64)bufva + i;
-    uint64 pa = lookup_pa((pagetable_t)current->pagetable, addr);
+    uint64 pa = (uint64)user_va_to_pa((pagetable_t)current->pagetable,(void*)addr);
     uint64 off = addr - ROUNDDOWN(addr, PGSIZE);
     uint64 len = count - i < PGSIZE - off ? count - i : PGSIZE - off;
     uint64 r = do_write(fd, (char *)pa + off, len);
@@ -228,13 +229,17 @@ process* load_other_program_with_para(process* proc,char* pathname,char* paranam
 }
 
 ssize_t sys_user_exec(const char* pathname, const char * paraname){
-  char *pathpa=(char *)lookup_pa(current->pagetable,(uint64)pathname);
-  char *parapa=(char *)lookup_pa(current->pagetable,(uint64)paraname);
+  sprint("in sys va:%p %p\n",pathname,paraname);
+  char *pathpa=(char *)user_va_to_pa(current->pagetable,(void*)pathname);
+  char *parapa=(char *)user_va_to_pa(current->pagetable,(void*)paraname);
+  sprint("in sys pa:%p %p\n",pathpa,parapa);
+  sprint("%s %s\n",pathpa,parapa);
   char path[512];
   char para[512];
   strcpy(path,pathpa);
   strcpy(para,parapa);
   realloc_proc(current);
+  sprint("path:%s  para:%s\n",path,para);
   load_other_program_with_para(current,path,para);
   current->trapframe->regs.sp-=512;
   strcpy((char *)user_va_to_pa(current->pagetable,(void*)current->trapframe->regs.sp),para);
@@ -251,6 +256,53 @@ ssize_t sys_user_exec(const char* pathname, const char * paraname){
 ssize_t sys_user_wait(int id){
   return do_wait(id);
 
+}
+
+
+ssize_t sys_user_scan(char *bufva){
+  char buf[1024];
+  char* bufpa=user_va_to_pa(current->pagetable,bufva);
+  sprint(">>>");
+  sprint("\b \b");
+  //sprint("");
+  spike_file_read(stdin,buf,1024);
+  for(int i=0;i<1024;i++){
+    if(buf[i]=='\n'){
+      buf[i]=0;
+      break;
+    }
+  }
+  strcpy(bufpa,buf);
+  return 0;
+}
+
+ssize_t sys_user_getchar(){
+  return getchar();
+}
+
+int funcname_printer(uint64 ret_addr) {
+  //sprint("%d\n",sym_count);
+  for(int i=0;i<current->sym_count;i++){
+    //sprint("%d %d %d\n", ret_addr, symbols[i].st_value, symbols[i].st_size);
+    if(ret_addr >=current->values[i][0]&&ret_addr<=current->values[i][1]){
+      sprint("%s\n",current->sym_names[i]);
+      if(strcmp(current->sym_names[i],"main")==0) return 0;
+      return 1;
+    }
+  }
+  return 1;
+}
+ssize_t sys_user_backtrace(int layer){
+  uint64 trace_sp = current->trapframe->regs.sp + 32;
+  uint64 trace_ra = trace_sp + 8;
+  trace_ra=(uint64)user_va_to_pa(current->pagetable,(void*)trace_ra);
+  uint64 nowlay;
+  for(nowlay=0; nowlay<layer; nowlay++) {
+    //sprint("%d\n",nowlay);
+    if(funcname_printer(*(uint64*)trace_ra) == 0) return nowlay;
+    trace_ra += 16;
+  }
+  return nowlay;
 }
 
 //
@@ -305,6 +357,12 @@ long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, long a6, l
       return sys_user_exec((char *)a1,(char *)a2);
     case SYS_user_wait:
       return sys_user_wait(a1);
+    case SYS_user_scan:
+      return sys_user_scan((char *)a1);
+    case SYS_user_getchar:
+      return sys_user_getchar();
+    case SYS_user_backtrace:
+      return sys_user_backtrace(a1);
     default:
       panic("Unknown syscall %ld \n", a0);
   }

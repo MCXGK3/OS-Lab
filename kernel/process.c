@@ -76,6 +76,7 @@ void switch_to(process* proc) {
 //
 void init_proc_pool() {
   memset( procs, 0, sizeof(process)*NPROC );
+  sprint("process size=%d\n",sizeof(process));
 
   for (int i = 0; i < NPROC; ++i) {
     procs[i].status = FREE;
@@ -194,8 +195,8 @@ int do_fork( process* parent)
         *child->trapframe = *parent->trapframe;
         break;
       case STACK_SEGMENT:
-        memcpy( (void*)lookup_pa(child->pagetable, child->mapped_info[STACK_SEGMENT].va),
-          (void*)lookup_pa(parent->pagetable, parent->mapped_info[i].va), PGSIZE );
+        memcpy( (void*)user_va_to_pa(child->pagetable,(void*)child->mapped_info[STACK_SEGMENT].va),
+          (void*)user_va_to_pa(parent->pagetable,(void*)parent->mapped_info[i].va), PGSIZE );
         break;
       case HEAP_SEGMENT:
         // build a same heap for child process.
@@ -217,7 +218,7 @@ int do_fork( process* parent)
             continue;
 
           void* child_pa = alloc_page();
-          memcpy(child_pa, (void*)lookup_pa(parent->pagetable, heap_block), PGSIZE);
+          memcpy(child_pa, (void*)user_va_to_pa(parent->pagetable,(void*)heap_block), PGSIZE);
           user_vm_map((pagetable_t)child->pagetable, heap_block, PGSIZE, (uint64)child_pa,
                       prot_to_type(PROT_WRITE | PROT_READ, 1));
         }
@@ -237,9 +238,9 @@ int do_fork( process* parent)
         // address region of child to the physical pages that actually store the code
         // segment of parent process.
         // DO NOT COPY THE PHYSICAL PAGES, JUST MAP THEM.
-        map_pages(child->pagetable,parent->mapped_info[CODE_SEGMENT].va,PGSIZE,lookup_pa(parent->pagetable,parent->mapped_info[CODE_SEGMENT].va),prot_to_type(PROT_READ|PROT_EXEC,1));
+        map_pages(child->pagetable,parent->mapped_info[CODE_SEGMENT].va,PGSIZE,(uint64)user_va_to_pa(parent->pagetable,(void*)parent->mapped_info[CODE_SEGMENT].va),prot_to_type(PROT_READ|PROT_EXEC,1));
         //panic( "You need to implement the code segment mapping of child in lab3_1.\n" );
-        sprint("do_fork map code segment at pa:%lx of parent to child at va:%lx.\n",lookup_pa(parent->pagetable,parent->mapped_info[CODE_SEGMENT].va),parent->mapped_info[CODE_SEGMENT].va);
+        sprint("do_fork map code segment at pa:%lx of parent to child at va:%lx.\n",user_va_to_pa(parent->pagetable,(void*)parent->mapped_info[CODE_SEGMENT].va),parent->mapped_info[CODE_SEGMENT].va);
         // after mapping, register the vm region (do not delete codes below!)
         child->mapped_info[child->total_mapped_region].va = parent->mapped_info[i].va;
         child->mapped_info[child->total_mapped_region].npages =

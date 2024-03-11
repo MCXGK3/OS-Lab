@@ -36,6 +36,8 @@ int unlink_u(const char *fn);
 int exec(const char *pathname,const char *paraname);
 
 int wait(int id);
+int scanu(char* buf);
+char getcharu();
 
-
+int print_backtrace(int layer);
 #endif

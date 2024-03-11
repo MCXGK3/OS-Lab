@@ -175,3 +175,15 @@ int exec(const char *pathname,const char *paraname){
 int wait(int id){
   return do_user_call(SYS_user_wait,id,0,0,0,0,0,0);
 }
+
+int scanu(char* buf){
+  return do_user_call(SYS_user_scan,(uint64)buf,0,0,0,0,0,0);
+}
+
+char getcharu(){
+  return do_user_call(SYS_user_getchar,0,0,0,0,0,0,0);
+}
+
+int print_backtrace(int layer){
+  return do_user_call(SYS_user_backtrace, layer, 0, 0, 0, 0, 0, 0); 
+}
