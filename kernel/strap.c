@@ -76,7 +76,9 @@ void handle_user_page_fault(uint64 mcause, uint64 sepc, uint64 stval) {
       if(stval>current[read_tp()]->stack_least){
         current[read_tp()]->mapped_info[STACK_SEGMENT].npages++;
         current[read_tp()]->mapped_info[STACK_SEGMENT].va-=PGSIZE;
-      map_pages(current[read_tp()]->pagetable,ROUNDDOWN(stval,PGSIZE),PGSIZE,(uint64)alloc_page(),prot_to_type(PROT_WRITE | PROT_READ, 1));
+        uint64 pa=(uint64)alloc_page();
+        sprint("alloc pa %p\n",pa);
+      map_pages(current[read_tp()]->pagetable,ROUNDDOWN(stval,PGSIZE),PGSIZE,(uint64)pa,prot_to_type(PROT_WRITE | PROT_READ, 1));
       }
       else{
         panic("this address is not available!");

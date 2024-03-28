@@ -8,17 +8,24 @@ int main(int argc,char* argv[]) {
     }
     else{
   int fd=open(argv[0],O_RDONLY);
-  char buf[4000];
-  read_u(fd,buf,256);
+  if(fd<0){
+    printu("Open Failed!!!\n");
+  }
+  else{
+  char buf[6000];
+  read_u(fd,buf,6000);
     // strcpy(buf,"123456789123456789123456789");
   int off=0;
   while (off<strlen(buf))
   {
-    printu("%s",buf);
-    off+=256;
+    printu("%s",buf+off);
+    off+=255;
   }
   printu("\n");
+  close(fd);
+  }
     }
+  
   exit(0);
   return 0;
 }

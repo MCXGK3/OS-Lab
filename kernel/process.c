@@ -324,7 +324,8 @@ int realloc_proc(process* proc){
         heap_block < current[hartid]->user_heap.heap_top; heap_block += PGSIZE) {
     if (free_block_filter[(heap_block - heap_bottom) / PGSIZE])  // skip free blocks
       continue;
-    user_vm_unmap(proc->pagetable,heap_block,PGSIZE,1);
+    pte_t* pte=page_walk(proc->pagetable,heap_block,0);
+    user_vm_unmap(proc->pagetable,heap_block,PGSIZE,(*pte&&1<<8)?0:1);
   }
 
   user_vm_unmap((pagetable_t)current[hartid]->pagetable, current[hartid]->mapped_info[DATA_SEGMENT].va,PGSIZE,0);

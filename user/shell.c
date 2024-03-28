@@ -37,11 +37,11 @@ void scan(){
   instruction* newins=better_malloc(sizeof(instruction));
   instruction* p;
   instruction* current=newins;
-  printu("new in %p\n",newins);
-  for(p=&first_input;p->next!=NULL;p=p->next)
-  {printu("%p %p %p\n",p->next,p->last,p->str);
-    printpa(p);
-  }
+  // printu("new in %p\n",newins);
+  for(p=&first_input;p->next!=NULL;p=p->next);
+  // {printu("%p %p %p\n",p->next,p->last,p->str);
+  //   printpa(p);
+  // }
   p->next=newins;
   newins->last=p;
   newins->next=NULL;
