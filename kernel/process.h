@@ -31,6 +31,7 @@ enum proc_status {
   RUNNING,         // currently running
   BLOCKED,         // waiting for something
   ZOMBIE,          // terminated but not reclaimed yet
+  UNAVAILABLE
 };
 
 // types of a segment
@@ -62,6 +63,15 @@ typedef struct process_heap_manager {
   uint32 free_pages_count;
 }process_heap_manager;
 
+typedef struct {
+    uint64 dir; char *file;
+} code_file;
+
+// address-line number-file name table
+typedef struct {
+    uint64 addr, line, file;
+} addr_line;
+
 // the extremely simple definition of process, used for begining labs of PKE
 typedef struct process_t {
   // pointing to the stack used in trap handling.
@@ -88,6 +98,8 @@ typedef struct process_t {
   // next queue element
   struct process_t *queue_next;
 
+  uint64 stack_least;
+
   // accounting. added @lab3_3
   int tick_count;
 
@@ -96,6 +108,8 @@ typedef struct process_t {
   int values[64][2];
   char sym_names[64][20];
   int sym_count;
+  char debug_line[PGSIZE*10];
+  char *debugline; char **dir; code_file *file; addr_line *line; int line_ind;
 
   // file system. added @lab4_1
   proc_file_management *pfiles;
@@ -116,6 +130,6 @@ int do_fork(process* parent);
 int realloc_proc(process* proc);
 
 // current running process
-extern process* current;
+extern process* current[NCPU];
 
 #endif

@@ -12,6 +12,7 @@ typedef struct file_t {
 } spike_file_t;
 
 extern spike_file_t spike_files[];
+extern spike_file_t *output;
 
 #define MAX_FILES 128
 #define MAX_FDS 128
@@ -55,11 +56,14 @@ ssize_t spike_file_lseek(spike_file_t* f, size_t ptr, int dir);
 ssize_t spike_file_read(spike_file_t* f, void* buf, size_t size);
 ssize_t spike_file_pread(spike_file_t* f, void* buf, size_t n, off_t off);
 ssize_t spike_file_write(spike_file_t* f, const void* buf, size_t n);
+spike_file_t* spike_file_mkdir(void* name,int mode);
 void spike_file_decref(spike_file_t* f);
 void spike_file_init(void);
 int spike_file_dup(spike_file_t* f);
 int spike_file_truncate(spike_file_t* f, off_t len);
 int spike_file_stat(spike_file_t* f, struct stat* s);
 spike_file_t* spike_file_get(int fd);
+ssize_t spike_file_readdir(void* name,int offset,char* buf);
+ssize_t spike_file_unlink(void* name);
 
 #endif

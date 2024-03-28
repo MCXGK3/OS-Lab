@@ -44,18 +44,20 @@ static uintptr_t mcall_console_putchar(uint8 ch) {
   return 0;
 }
 
-void vprintk(const char* s, va_list vl) {
+void vprintk(const char* s, va_list vl,spike_file_t* file) {
   char out[256];
   int res = vsnprintf(out, sizeof(out), s, vl);
   //you need spike_file_init before this call
+  if(file==NULL)
   spike_file_write(stderr, out, res < sizeof(out) ? res : sizeof(out));
+  else spike_file_write(file, out, res < sizeof(out) ? res : sizeof(out));
 }
 
-void printk(const char* s, ...) {
+void printerr(const char* s, ...) {
   va_list vl;
   va_start(vl, s);
 
-  vprintk(s, vl);
+  vprintk(s, vl,NULL);
 
   va_end(vl);
 }
@@ -74,7 +76,7 @@ void sprint(const char* s, ...) {
   va_list vl;
   va_start(vl, s);
 
-  vprintk(s, vl);
+  vprintk(s, vl,output);
 
   va_end(vl);
 }
@@ -101,6 +103,7 @@ char getchar(){
 
 void shutdown(int code) {
   sprint("System is shutting down with exit code %d.\n", code);
+  if(output!=NULL) spike_file_close(output);
   frontend_syscall(HTIFSYS_exit, code, 0, 0, 0, 0, 0, 0);
   while (1)
     ;
@@ -109,7 +112,7 @@ void shutdown(int code) {
 void do_panic(const char* s, ...) {
   va_list vl;
   va_start(vl, s);
-
+  printerr(s,vl);
   sprint(s, vl);
   shutdown(-1);
 

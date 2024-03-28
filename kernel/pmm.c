@@ -5,7 +5,7 @@
 #include "util/string.h"
 #include "memlayout.h"
 #include "spike_interface/spike_utils.h"
-
+#include "spike_interface/atomic.h"
 // _end is defined in kernel/kernel.lds, it marks the ending (virtual) address of PKE kernel
 extern char _end[];
 // g_mem_size is defined in spike_interface/spike_memory.c, it indicates the size of our
@@ -14,6 +14,8 @@ extern uint64 g_mem_size;
 
 static uint64 free_mem_start_addr;  //beginning address of free memory
 static uint64 free_mem_end_addr;    //end address of free memory (not included)
+
+spinlock_t alloc_page_lock=SPINLOCK_INIT;
 
 typedef struct node {
   struct node *next;
@@ -50,9 +52,10 @@ void free_page(void *pa) {
 // Allocates only ONE page!
 //
 void *alloc_page(void) {
+  spinlock_lock(&alloc_page_lock);
   list_node *n = g_free_mem_list.next;
   if (n) g_free_mem_list.next = n->next;
-
+  spinlock_unlock(&alloc_page_lock);
   return (void *)n;
 }
 

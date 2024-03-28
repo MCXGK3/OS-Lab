@@ -773,7 +773,9 @@ int rfs_hook_closedir(struct vinode *dir_vinode, struct dentry *dentry) {
 // if offset is 1, the second entry is read, and so on.
 // return: 0 on success, -1 when there are no more entry (end of the list).
 //
-int rfs_readdir(struct vinode *dir_vinode, struct dir *dir, int *offset) {
+int rfs_readdir(struct dentry *dir_dentry, struct dir *dir, int *offset) {
+  struct vinode* dir_vinode=dir_dentry->dentry_inode;
+
   int total_direntrys = dir_vinode->size / sizeof(struct rfs_direntry);
   int one_block_direntrys = RFS_BLKSIZE / sizeof(struct rfs_direntry);
 
@@ -797,6 +799,14 @@ int rfs_readdir(struct vinode *dir_vinode, struct dir *dir, int *offset) {
   // note: DO NOT DELETE CODE BELOW PANIC.
   strcpy(dir->name,p_direntry->name);
   dir->inum=p_direntry->inum;
+  struct rfs_device* p; 
+  p=rfs_device_list[dir_dentry->dentry_inode->sb->s_dev->dev_id];
+  struct rfs_dinode* freenode=rfs_read_dinode(p,p_direntry->inum);
+  
+  dir->type=freenode->type;
+  free_page(freenode);
+
+  
   //panic("You need to implement the code for reading a directory entry of rfs in lab4_2.\n" );
 
   // DO NOT DELETE CODE BELOW.

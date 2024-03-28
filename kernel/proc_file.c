@@ -68,7 +68,7 @@ struct file *get_opened_file(int fd) {
 
   // browse opened file list to locate the fd
   for (int i = 0; i < MAX_FILES; ++i) {
-    pfile = &(current->pfiles->opened_files[i]);  // file entry
+    pfile = &(current[read_tp()]->pfiles->opened_files[i]);  // file entry
     if (i == fd) break;
   }
   if (pfile == NULL) panic("do_read: invalid fd!\n");
@@ -84,19 +84,19 @@ int do_open(char *pathname, int flags) {
   if ((opened_file = vfs_open(pathname, flags)) == NULL) return -1;
 
   int fd = 0;
-  if (current->pfiles->nfiles >= MAX_FILES) {
+  if (current[read_tp()]->pfiles->nfiles >= MAX_FILES) {
     panic("do_open: no file entry for current process!\n");
   }
   struct file *pfile;
   for (fd = 0; fd < MAX_FILES; ++fd) {
-    pfile = &(current->pfiles->opened_files[fd]);
+    pfile = &(current[read_tp()]->pfiles->opened_files[fd]);
     if (pfile->status == FD_NONE) break;
   }
 
   // initialize this file structure
   memcpy(pfile, opened_file, sizeof(struct file));
 
-  ++current->pfiles->nfiles;
+  ++current[read_tp()]->pfiles->nfiles;
   return fd;
 }
 
@@ -111,6 +111,7 @@ int do_read(int fd, char *buf, uint64 count) {
 
   char buffer[count + 1];
   int len = vfs_read(pfile, buffer, count);
+  //sprint("count is %d",count);
   buffer[count] = '\0';
   strcpy(buf, buffer);
   return len;
@@ -172,7 +173,7 @@ int do_opendir(char *pathname) {
   int fd = 0;
   struct file *pfile;
   for (fd = 0; fd < MAX_FILES; ++fd) {
-    pfile = &(current->pfiles->opened_files[fd]);
+    pfile = &(current[read_tp()]->pfiles->opened_files[fd]);
     if (pfile->status == FD_NONE) break;
   }
   if (pfile->status != FD_NONE)  // no free entry
@@ -181,7 +182,7 @@ int do_opendir(char *pathname) {
   // initialize this file structure
   memcpy(pfile, opened_file, sizeof(struct file));
 
-  ++current->pfiles->nfiles;
+  ++current[read_tp()]->pfiles->nfiles;
   return fd;
 }
 
@@ -220,4 +221,13 @@ int do_link(char *oldpath, char *newpath) {
 //
 int do_unlink(char *path) {
   return vfs_unlink(path);
+}
+
+
+int do_rcwd(char *path){
+  return vfs_rcwd(path);
+}
+
+int do_ccwd(char *path){
+  return vfs_ccwd(path);
 }

@@ -15,7 +15,11 @@
 #include "vfs.h"
 #include "rfs.h"
 #include "ramdev.h"
+#include "kernel/sync_utils.h"
 
+int vmminit_barrier=0;
+int loadpro_barrier=0;
+int proc_barrier=0;
 //
 // trap_sec_start points to the beginning of S-mode trap segment (i.e., the entry point of
 // S-mode trap vector). added @lab2_1
@@ -75,7 +79,8 @@ process* load_user_program() {
   size_t argc = parse_args(&arg_bug_msg);
   if (!argc) panic("You need to specify the application program!\n");
 
-  load_bincode_from_host_elf(proc, arg_bug_msg.argv[0]);
+  load_bincode_from_host_elf(proc, arg_bug_msg.argv[read_tp()]);
+  
   return proc;
 }
 
@@ -88,23 +93,29 @@ int s_start(void) {
   // but now, we are going to switch to the paging mode @lab2_1.
   // note, the code still works in Bare mode when calling pmm_init() and kern_vm_init().
   write_csr(satp, 0);
-
+  sprint("tp:%d\n",read_tp());
   // init phisical memory manager
+  if(read_tp()==0){
   pmm_init();
 
   // build the kernel page table
   kern_vm_init();
+  }
+  sync_barrier(&vmminit_barrier,NCPU);
 
   // now, switch to paging mode by turning on paging (SV39)
   enable_paging();
   // the code now formally works in paging mode, meaning the page table is now in use.
   sprint("kernel page table is on \n");
 
+  if(read_tp()==0){
   // added @lab3_1
   init_proc_pool();
 
   // init file system, added @lab4_1
   fs_init();
+  }
+  sync_barrier(&proc_barrier,NCPU);
 
   sprint("Switch to user mode...\n");
   // the application code (elf) is first loaded into memory, and then put into execution

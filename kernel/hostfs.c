@@ -10,6 +10,8 @@
 #include "util/types.h"
 #include "vfs.h"
 
+#include<errno.h>
+
 /**** host-fs vinode interface ****/
 const struct vinode_ops hostfs_i_ops = {
     .viop_read = hostfs_read,
@@ -185,8 +187,8 @@ struct vinode *hostfs_lookup(struct vinode *parent, struct dentry *sub_dentry) {
   // get complete path string
   char path[MAX_PATH_LEN];
   get_path_string(path, sub_dentry);
-
   spike_file_t *f = spike_file_open(path, O_RDWR, 0);
+  if((int64)f==-2)return NULL;
   struct vinode *child_inode = hostfs_alloc_vinode(parent->sb);
   child_inode->i_fs_info = f;
   hostfs_update_vinode(child_inode);
@@ -241,18 +243,38 @@ int hostfs_link(struct vinode *parent, struct dentry *sub_dentry,
 }
 
 int hostfs_unlink(struct vinode *parent, struct dentry *sub_dentry, struct vinode *unlink_node) {
-  panic("hostfs_unlink not implemented!\n");
+  char path[MAX_FILE_NAME_LEN];
+  get_path_string(path,sub_dentry);
+  spike_file_unlink(path);
   return -1;
 }
 
-int hostfs_readdir(struct vinode *dir_vinode, struct dir *dir, int *offset) {
-  panic("hostfs_readdir not implemented!\n");
-  return -1;
+int hostfs_readdir(struct dentry *dir_dentry, struct dir *dir, int *offset) {
+  char path[MAX_FILE_NAME_LEN];
+  get_path_string(path,dir_dentry);
+  int ret=spike_file_readdir(path,*offset,dir->name);
+  if(ret==-1) return -1;
+  if(ret==4) dir->type=DIR_I;
+  if(ret==8) dir->type=FILE_I;
+  (*offset)+=1;
+  return 0;
 }
 
 struct vinode *hostfs_mkdir(struct vinode *parent, struct dentry *sub_dentry) {
-  panic("hostfs_mkdir not implemented!\n");
-  return NULL;
+  char path[MAX_PATH_LEN];
+  get_path_string(path, sub_dentry);
+  spike_file_t* fd=(spike_file_t* )spike_file_mkdir(path,0775);
+  if ((int64)fd < 0) {
+    sprint("hostfs_create cannot make the given dir.\n");
+    return NULL;
+  }
+  struct vinode *new_inode = hostfs_alloc_vinode(parent->sb);
+  new_inode->i_fs_info = fd;
+  new_inode->type=H_DIR;
+
+  new_inode->ref = 0;
+  return new_inode;
+  
 }
 
 /**** vfs-hostfs hook interface functions ****/

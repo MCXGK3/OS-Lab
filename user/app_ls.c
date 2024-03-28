@@ -3,10 +3,10 @@
 #include "util/types.h"
 
 int main(int argc, char *argv[]) {
-  char *path = argv[0];
-  int dir_fd = opendir_u(path);
+  int dir_fd = opendir_u(".");
+  printu("%d\n",dir_fd);
   printu("---------- ls command -----------\n");
-  printu("ls \"%s\":\n", path);
+  printu("ls \"%s\":\n", ".");
   printu("[name]               [inode_num]\n");
   struct dir dir;
   int width = 20;
@@ -25,7 +25,6 @@ int main(int argc, char *argv[]) {
   }
   printu("------------------------------\n");
   closedir_u(dir_fd);
-
   exit(0);
   return 0;
 }

@@ -19,14 +19,23 @@
 int map_pages(pagetable_t page_dir, uint64 va, uint64 size, uint64 pa, int perm) {
   uint64 first, last;
   pte_t *pte;
-
+  // sprint("va:%p\npa:%p\nsize:%d\n",va,pa,size);
   for (first = ROUNDDOWN(va, PGSIZE), last = ROUNDDOWN(va + size - 1, PGSIZE);
       first <= last; first += PGSIZE, pa += PGSIZE) {
-    if ((pte = page_walk(page_dir, first, 1)) == 0) return -1;
-    if (*pte & PTE_V)
+    if ((pte = page_walk(page_dir, first, 1)) == 0){
+      return -1;
+    }
+    if (*pte & PTE_V){
+      if(*pte&&1<<8){
+        user_vm_unmap(page_dir,first,PGSIZE,0);
+      }
+      else{
       panic("map_pages fails on mapping va (0x%lx) to pa (0x%lx)", first, pa);
+      }
+    }
     *pte = PA2PTE(pa) | perm | PTE_V;
   }
+  // sprint("%p  %p\n",first,last);
   return 0;
 }
 
@@ -73,8 +82,10 @@ pte_t *page_walk(pagetable_t page_dir, uint64 va, int alloc) {
         // writes the physical address of newly allocated page to pte, to establish the
         // page table tree.
         *pte = PA2PTE(pt) | PTE_V;
-      }else //returns NULL, if alloc == 0, or no more physical page remains
+      }else{ 
+        //returns NULL, if alloc == 0, or no more physical page remains
         return 0;
+      }
     }
   }
 
@@ -125,7 +136,7 @@ void kern_vm_init(void) {
   t_page_dir = (pagetable_t)alloc_page();
   // memset is defined in util/string.c
   memset(t_page_dir, 0, PGSIZE);
-
+  sprint("_etext is %p\n",_etext);
   // map virtual address [KERN_BASE, _etext] to physical address [DRAM_BASE, DRAM_BASE+(_etext - KERN_BASE)],
   // to maintain (direct) text section kernel address mapping.
   kern_vm_map(t_page_dir, KERN_BASE, DRAM_BASE, (uint64)_etext - KERN_BASE,
@@ -192,7 +203,7 @@ void user_vm_unmap(pagetable_t page_dir, uint64 va, uint64 size, int free) {
   //panic( "You have to implement user_vm_unmap to free pages using naive_free in lab2_2.\n" );
   pte_t *p=page_walk(page_dir,va,0);
   if(free){
-    uint64 pa=(uint64)user_va_to_pa(page_dir,(void*)va);
+    uint64 pa=lookup_pa(page_dir,va);
     free_page((void *)pa);
   }
   *p&=((~0)-1);

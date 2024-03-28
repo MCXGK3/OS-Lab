@@ -18,10 +18,14 @@
 #include "sched.h"
 #include "spike_interface/spike_utils.h"
 #include "util/functions.h"
+#include "spike_interface/atomic.h"
 
 //Two functions defined in kernel/usertrap.S
 extern char smode_trap_vector[];
 extern void return_to_user(trapframe *, uint64 satp);
+
+spinlock_t alloc_proc_lock=SPINLOCK_INIT;
+
 
 // trap_sec_start points to the beginning of S-mode trap segment (i.e., the entry point
 // of S-mode trap vector).
@@ -31,14 +35,14 @@ extern char trap_sec_start[];
 process procs[NPROC];
 
 // current points to the currently running user-mode application.
-process* current = NULL;
+process* current[NCPU] = {NULL};
 
 //
 // switch to a user-mode process
 //
 void switch_to(process* proc) {
   assert(proc);
-  current = proc;
+  current[read_tp()] = proc;
 
   // write the smode_trap_vector (64-bit func. address) defined in kernel/strap_vector.S
   // to the stvec privilege register, such that trap handler pointed by smode_trap_vector
@@ -91,14 +95,19 @@ void init_proc_pool() {
 process* alloc_process() {
   // locate the first usable process structure
   int i;
-
+  spinlock_lock(&alloc_proc_lock);
+  sprint("");
   for( i=0; i<NPROC; i++ )
     if( procs[i].status == FREE ) break;
 
   if( i>=NPROC ){
     panic( "cannot find any free process structure.\n" );
+    spinlock_unlock(&alloc_proc_lock);
     return 0;
   }
+  procs[i].status=UNAVAILABLE;
+  spinlock_unlock(&alloc_proc_lock);
+  sprint("%d\n",i);
 
   // init proc[i]'s vm space
   procs[i].trapframe = (trapframe *)alloc_page();  //trapframe, used to save context
@@ -111,7 +120,7 @@ process* alloc_process() {
   procs[i].kstack = (uint64)alloc_page() + PGSIZE;   //user kernel stack top
   uint64 user_stack = (uint64)alloc_page();       //phisical address of user stack bottom
   procs[i].trapframe->regs.sp = USER_STACK_TOP;  //virtual address of user stack top
-
+  procs[i].stack_least=USER_STACK_TOP-20*PGSIZE;
   // allocates a page to record memory regions (segments)
   procs[i].mapped_info = (mapped_region*)alloc_page();
   memset( procs[i].mapped_info, 0, PGSIZE );
@@ -186,7 +195,7 @@ int do_fork( process* parent)
 {
   sprint( "will fork a child from parent %d.\n", parent->pid );
   process* child = alloc_process();
-
+  int hartid=read_tp();
   for( int i=0; i<parent->total_mapped_region; i++ ){
     // browse parent's vm space, and copy its trapframe and data segments,
     // map its code segment.
@@ -194,11 +203,21 @@ int do_fork( process* parent)
       case CONTEXT_SEGMENT:
         *child->trapframe = *parent->trapframe;
         break;
-      case STACK_SEGMENT:
-        memcpy( (void*)user_va_to_pa(child->pagetable,(void*)child->mapped_info[STACK_SEGMENT].va),
-          (void*)user_va_to_pa(parent->pagetable,(void*)parent->mapped_info[i].va), PGSIZE );
+      case STACK_SEGMENT:{
+        child->mapped_info[STACK_SEGMENT].va=parent->mapped_info[STACK_SEGMENT].va;
+        child->mapped_info[STACK_SEGMENT].npages=parent->mapped_info[STACK_SEGMENT].npages;
+      for(int j=0;j<parent->mapped_info[i].npages;j++){
+        if(user_va_to_pa(child->pagetable,(void*)child->mapped_info[STACK_SEGMENT].va+j*PGSIZE)==NULL){
+          void *pa=alloc_page();
+          user_vm_map(child->pagetable,child->mapped_info[STACK_SEGMENT].va+j*PGSIZE,PGSIZE,(uint64)pa,prot_to_type(PROT_READ|PROT_WRITE,1));
+        }
+        sprint("stack_segment:%p %p\n",child->mapped_info[STACK_SEGMENT].va+j*PGSIZE,user_va_to_pa(child->pagetable,(void*)child->mapped_info[STACK_SEGMENT].va+j*PGSIZE));
+        memcpy( (void*)user_va_to_pa(child->pagetable,(void*)child->mapped_info[STACK_SEGMENT].va+j*PGSIZE),
+          (void*)user_va_to_pa(parent->pagetable,(void*)parent->mapped_info[i].va+j*PGSIZE), PGSIZE );
+      }
+      }
         break;
-      case HEAP_SEGMENT:
+      case HEAP_SEGMENT:{
         // build a same heap for child process.
 
         // convert free_pages_address into a filter to skip reclaimed blocks in the heap
@@ -212,15 +231,19 @@ int do_fork( process* parent)
         }
 
         // copy and map the heap blocks
-        for (uint64 heap_block = current->user_heap.heap_bottom;
-             heap_block < current->user_heap.heap_top; heap_block += PGSIZE) {
+        for (uint64 heap_block = current[hartid]->user_heap.heap_bottom;
+             heap_block < current[hartid]->user_heap.heap_top; heap_block += PGSIZE) {
           if (free_block_filter[(heap_block - heap_bottom) / PGSIZE])  // skip free blocks
             continue;
 
-          void* child_pa = alloc_page();
-          memcpy(child_pa, (void*)user_va_to_pa(parent->pagetable,(void*)heap_block), PGSIZE);
-          user_vm_map((pagetable_t)child->pagetable, heap_block, PGSIZE, (uint64)child_pa,
-                      prot_to_type(PROT_WRITE | PROT_READ, 1));
+          // void* child_pa = alloc_page();
+          // memcpy(child_pa, (void*)user_va_to_pa(parent->pagetable,(void*)heap_block), PGSIZE);
+
+          void* pa=user_va_to_pa(parent->pagetable,(void*)heap_block);
+          user_vm_map((pagetable_t)child->pagetable, heap_block, PGSIZE, (uint64)pa,
+                      prot_to_type(PROT_READ, 1));
+          pte_t* pte=page_walk((pagetable_t)child->pagetable,heap_block,0);
+            *pte|=1<<8;
         }
 
         child->mapped_info[HEAP_SEGMENT].npages = parent->mapped_info[HEAP_SEGMENT].npages;
@@ -228,6 +251,7 @@ int do_fork( process* parent)
         // copy the heap manager from parent to child
         memcpy((void*)&child->user_heap, (void*)&parent->user_heap, sizeof(parent->user_heap));
         break;
+      }
       case CODE_SEGMENT:
         // TODO (lab3_1): implment the mapping of child code segment to parent's
         // code segment.
@@ -248,7 +272,23 @@ int do_fork( process* parent)
         child->mapped_info[child->total_mapped_region].seg_type = CODE_SEGMENT;
         child->total_mapped_region++;
         break;
+      case DATA_SEGMENT:{
+        // void* childp=alloc_page();
+        // memcpy(childp, user_va_to_pa(parent->pagetable, (void*)(parent->mapped_info[i].va)), PGSIZE);
+
+        user_vm_map((pagetable_t)child->pagetable, parent->mapped_info[i].va, PGSIZE, (uint64)user_va_to_pa(parent->pagetable, (void*)(parent->mapped_info[i].va)),
+                      prot_to_type(PROT_READ, 1));
+        pte_t* pte=page_walk(child->pagetable,parent->mapped_info[i].va,0);
+        *pte|=1<<8;
+        child->mapped_info[child->total_mapped_region].va=parent->mapped_info[i].va;
+        child->mapped_info[child->total_mapped_region].npages=parent->mapped_info[i].npages;
+        child->mapped_info[child->total_mapped_region].seg_type=DATA_SEGMENT;
+        child->total_mapped_region++;
+        break;
+      }
     }
+    child->pfiles->cwd=parent->pfiles->cwd;
+
   }
 
   child->status = READY;
@@ -261,11 +301,14 @@ int do_fork( process* parent)
 
 int realloc_proc(process* proc){
   user_vm_unmap(proc->pagetable,proc->mapped_info[CODE_SEGMENT].va,PGSIZE,0);
+  int hartid=read_tp();
 
-
-  for(int i=ROUNDDOWN(proc->trapframe->regs.sp,PGSIZE);i<USER_STACK_TOP;i+=PGSIZE){
+  for(int i=ROUNDDOWN(proc->mapped_info[STACK_SEGMENT].va,PGSIZE);i<USER_STACK_TOP;i+=PGSIZE){
     user_vm_unmap(proc->pagetable,i,PGSIZE,1);
   }
+  // for(int i=ROUNDDOWN(proc->trapframe->regs.sp,PGSIZE);i<USER_STACK_TOP;i+=PGSIZE){
+  //   user_vm_unmap(proc->pagetable,i,PGSIZE,1);
+  // }
 
 
   int free_block_filter[MAX_HEAP_PAGES];
@@ -277,12 +320,15 @@ int realloc_proc(process* proc){
   }
 
   // copy and map the heap blocks
-  for (uint64 heap_block = current->user_heap.heap_bottom;
-        heap_block < current->user_heap.heap_top; heap_block += PGSIZE) {
+  for (uint64 heap_block = current[hartid]->user_heap.heap_bottom;
+        heap_block < current[hartid]->user_heap.heap_top; heap_block += PGSIZE) {
     if (free_block_filter[(heap_block - heap_bottom) / PGSIZE])  // skip free blocks
       continue;
     user_vm_unmap(proc->pagetable,heap_block,PGSIZE,1);
   }
+
+  user_vm_unmap((pagetable_t)current[hartid]->pagetable, current[hartid]->mapped_info[DATA_SEGMENT].va,PGSIZE,0);
+
   free_page((void*)ROUNDDOWN(proc->kstack-1,PGSIZE));
 
 

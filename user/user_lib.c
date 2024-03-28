@@ -9,6 +9,10 @@
 #include "util/types.h"
 #include "util/snprintf.h"
 #include "kernel/syscall.h"
+#define PGSIZE 4096
+memory_block* free_blocks= (memory_block*)NULL;
+uint64 lastaddr=0;
+
 
 uint64 do_user_call(uint64 sysnum, uint64 a1, uint64 a2, uint64 a3, uint64 a4, uint64 a5, uint64 a6,
                  uint64 a7) {
@@ -25,7 +29,10 @@ uint64 do_user_call(uint64 sysnum, uint64 a1, uint64 a2, uint64 a3, uint64 a4, u
 
   return ret;
 }
-
+void LibInit(){
+  free_blocks=NULL;
+  lastaddr=0;
+}
 //
 // printu() supports user/lab1_1_helloworld.c
 //
@@ -54,7 +61,9 @@ int exit(int code) {
 // lib call to naive_malloc
 //
 void* naive_malloc() {
-  return (void*)do_user_call(SYS_user_allocate_page, 0, 0, 0, 0, 0, 0, 0);
+  lastaddr=do_user_call(SYS_user_allocate_page, 0, 0, 0, 0, 0, 0, 0);
+  lastaddr+=PGSIZE;
+  return (void*)(lastaddr-PGSIZE);
 }
 
 //
@@ -168,8 +177,8 @@ int close(int fd) {
   return do_user_call(SYS_user_close, fd, 0, 0, 0, 0, 0, 0);
 }
 
-int exec(const char *pathname,const char *paraname){
-  return do_user_call(SYS_user_exec,(uint64)pathname,(uint64)paraname,0,0,0,0,0);
+int exec(const char *pathname,int n,char **paraname){
+  return do_user_call(SYS_user_exec,(uint64)pathname,n,(uint64)paraname,0,0,0,0);
 }
 
 int wait(int id){
@@ -187,3 +196,222 @@ char getcharu(){
 int print_backtrace(int layer){
   return do_user_call(SYS_user_backtrace, layer, 0, 0, 0, 0, 0, 0); 
 }
+
+void test(){
+  for(memory_block*p=free_blocks;p!=NULL;p=p->next){
+    printu("%p next is %p, size is %d\n",p,p->next,p->size);
+  }
+}
+void* better_malloc(int size){
+  //test();
+  size=(((size-1)/8)+1)*8;
+  int relsize=0;
+  if((void*)free_blocks==NULL){
+    size+=sizeof(memory_block);
+    // printu("%d\n",size);
+    int num=(size-1)/PGSIZE;
+    // printu("num is %d\n",num);
+    uint64 lastpage;
+    memory_block* new=(memory_block*)naive_malloc();
+    for(int i=0;i<num;i++){
+      lastpage=(uint64)naive_malloc();
+    }
+    if(size%PGSIZE>(PGSIZE-sizeof(memory_block))){
+      relsize=(((size-1)/PGSIZE)+1)*PGSIZE;
+    }
+    else{
+      relsize=size;
+      memory_block* newfree=(memory_block*)((char*)new+size);
+      newfree->next=free_blocks;
+      newfree->size=PGSIZE-sizeof(memory_block)-(size%PGSIZE);
+      free_blocks=newfree;
+    }
+    new->size=relsize-sizeof(memory_block);
+    //printu("new is %p\n",new);
+    // printu("memory_block size is%d\n",sizeof(memory_block));
+    return (void*)(new+1);
+  }
+  else{
+    if(free_blocks->size>size+sizeof(memory_block)){
+      memory_block* new=free_blocks;
+      memory_block* newfree=(memory_block*)((char*)free_blocks+size+sizeof(memory_block));
+      newfree->size=free_blocks->size-size-sizeof(memory_block);
+      newfree->next=free_blocks->next;
+      free_blocks->size=size;
+      free_blocks=newfree;
+      return (void*)(new+1);
+    }
+    else if(free_blocks->size>size){
+      memory_block* new=free_blocks;
+      free_blocks=free_blocks->next;
+      return (void*)(new+1);
+    }
+    for(memory_block* p=free_blocks;(void*)(p->next)!=NULL;p=p->next){
+      if(p->next->size>size+sizeof(memory_block)){
+          memory_block* new=p->next;
+          memory_block* newfree=(memory_block*)((char*)new+size+sizeof(memory_block));
+          newfree->size=new->size-size-sizeof(memory_block);
+          newfree->next=new->next;
+          p->next->size=size;
+          p->next=newfree;
+          return (void*)(new+1);
+      }
+      else if (p->next->size>size)
+      {
+        memory_block* new=p->next;
+        p->next=new->next;
+        return (void*)(new+1);
+      } 
+    }
+    memory_block* p;
+    if(free_blocks->next!=NULL){
+    for(p=free_blocks;(void*)(p->next->next)!=NULL;p=p->next);
+    
+    
+    if((uint64)(p->next)+sizeof(memory_block)+p->next->size==lastaddr){
+    memory_block* new=p->next;
+    relsize=size-p->next->size;
+    int num=(relsize-1)/PGSIZE;
+    uint64 lastpage=0;
+    for(int i=0;i<num;i++) lastpage=(uint64)naive_malloc();
+    if(relsize%PGSIZE>PGSIZE-sizeof(memory_block)){
+      p->next->size+=num*PGSIZE;
+      p->next=p->next->next;
+    }
+    else{
+      memory_block* newfree=(memory_block*)(lastpage+(relsize%PGSIZE));
+      newfree->size=PGSIZE-(relsize%PGSIZE)-sizeof(memory_block);
+      newfree->next=p->next->next;
+      new->size+=relsize;
+      p->next=newfree;
+    }
+    return (void*)(new+1);
+    }
+    else{
+    size+=sizeof(memory_block);
+    int num=(size-1)/PGSIZE;
+    uint64 lastpage;
+    memory_block* new=(memory_block*)naive_malloc();
+    for(int i=0;i<num;i++){
+      lastpage=(uint64)naive_malloc();
+    }
+    if(size%PGSIZE>(PGSIZE-sizeof(memory_block))){
+      relsize=(((size-1)/PGSIZE)+1)*PGSIZE;
+    }
+    else{
+      relsize=size;
+      memory_block* newfree=(memory_block*)((char*)new+size);
+      newfree->next=p->next->next;
+      newfree->size=PGSIZE-sizeof(memory_block)-(size%PGSIZE);
+      p->next->next=newfree;
+    }
+    new->size=relsize-sizeof(memory_block);
+    //printu("new is %p\n",new);
+    // printu("memory_block size is%d\n",sizeof(memory_block));
+    return (void*)(new+1);
+    }
+    }
+    else{
+      if(((uint64)free_blocks)+sizeof(memory_block)+free_blocks->size==lastaddr){
+        memory_block* new=free_blocks;
+        relsize=size-free_blocks->size;
+        int num=(relsize-1)/PGSIZE;
+        uint64 lastpage=0;
+        for(int i=0;i<num;i++) lastpage=(uint64)naive_malloc();
+        if(relsize%PGSIZE>PGSIZE-sizeof(memory_block)){
+          free_blocks->size+=num*PGSIZE;
+        }
+    else{
+      memory_block* newfree=(memory_block*)(lastpage+(relsize%PGSIZE));
+      newfree->size=PGSIZE-(relsize%PGSIZE)-sizeof(memory_block);
+      newfree->next=free_blocks->next;
+      new->size+=relsize;
+      free_blocks=newfree;
+    }
+    return (void*)(new+1);
+      }
+    else{
+      size+=sizeof(memory_block);
+    // printu("%d\n",size);
+    int num=(size-1)/PGSIZE;
+    // printu("num is %d\n",num);
+    uint64 lastpage;
+    memory_block* new=(memory_block*)naive_malloc();
+    for(int i=0;i<num;i++){
+      lastpage=(uint64)naive_malloc();
+    }
+    if(size%PGSIZE>(PGSIZE-sizeof(memory_block))){
+      relsize=(((size-1)/PGSIZE)+1)*PGSIZE;
+    }
+    else{
+      relsize=size;
+      memory_block* newfree=(memory_block*)((char*)new+size);
+      newfree->next=free_blocks->next;
+      newfree->size=PGSIZE-sizeof(memory_block)-(size%PGSIZE);
+      free_blocks->next=newfree;
+    }
+    new->size=relsize-sizeof(memory_block);
+    //printu("new is %p\n",new);
+    // printu("memory_block size is%d\n",sizeof(memory_block));
+    return (void*)(new+1);
+    }
+    }
+  }
+}
+
+void better_free(void* addr){
+  // printu("better_free %p\n",addr);
+  // printu("%p\n",free_blocks);
+  //test();
+  
+  memory_block* now=(memory_block*)((uint64)addr-sizeof(memory_block));
+  if((uint64)now<(uint64)free_blocks){
+    now->next=free_blocks;
+    free_blocks=now;
+    return;
+  }
+  else{
+    memory_block*p;
+    for(p=free_blocks;(void*)(p->next)!=NULL;p=p->next){
+      if((uint64)now>(uint64)p && (uint64)now<(uint64)p->next){
+        now->next=p->next;
+        p->next=now;
+        return;
+      }
+    }
+    now->next=p->next;
+    p->next=now;
+    return;
+  }
+
+}
+
+
+void sem_P(int id){
+  do_user_call(SYS_user_sem_P,id,0,0,0,0,0,0);
+}
+
+void sem_V(int id){
+  do_user_call(SYS_user_sem_V,id,0,0,0,0,0,0);
+}
+
+int sem_new(int num){
+  return do_user_call(SYS_user_sem_new,num,0,0,0,0,0,0);
+}
+
+void printpa(void* va)
+{
+  do_user_call(SYS_user_printpa, (uint64)va, 0, 0, 0, 0, 0, 0);
+}
+int read_cwd(char *path) {
+  return do_user_call(SYS_user_rcwd, (uint64)path, 0, 0, 0, 0, 0, 0);
+}
+
+//
+// lib call to change pwd
+//
+int change_cwd(const char *path) {
+  return do_user_call(SYS_user_ccwd, (uint64)path, 0, 0, 0, 0, 0, 0);
+}
+
+

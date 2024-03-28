@@ -7,6 +7,13 @@
 #include "util/types.h"
 #include "kernel/proc_file.h"
 
+typedef struct memory_block_t 
+{
+  struct memory_block_t* next;
+  uint64 size;
+}memory_block;
+
+
 int printu(const char *s, ...);
 int exit(int code);
 void* naive_malloc();
@@ -33,11 +40,25 @@ int closedir_u(int fd);
 int link_u(const char *fn1, const char *fn2);
 int unlink_u(const char *fn);
 
-int exec(const char *pathname,const char *paraname);
+int exec(const char *pathname,int n,char **paraname);
 
 int wait(int id);
 int scanu(char* buf);
 char getcharu();
 
 int print_backtrace(int layer);
+
+void* better_malloc(int size);
+void better_free(void* addr);
+
+
+void sem_P(int id);
+void sem_V(int id);
+int sem_new(int num);
+void printpa(void* va);
+
+
+int read_cwd(char *path);
+int change_cwd(const char *path);
+void LibInit();
 #endif

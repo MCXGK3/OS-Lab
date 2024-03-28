@@ -16,6 +16,7 @@
 
 static spike_file_t* spike_fds[MAX_FDS];
 spike_file_t spike_files[MAX_FILES] = {[0 ... MAX_FILES - 1] = {-1, 0}};
+spike_file_t *output=NULL;
 
 void copy_stat(struct stat* dest_va, struct frontend_stat* src) {
   struct stat* dest = (struct stat*)dest_va;
@@ -99,7 +100,6 @@ void spike_file_init(void) {
 spike_file_t* spike_file_openat(int dirfd, const char* fn, int flags, int mode) {
   spike_file_t* f = spike_file_get_free();
   if (f == NULL) return ERR_PTR(-ENOMEM);
-
   size_t fn_size = strlen(fn) + 1;
   long ret = frontend_syscall(HTIFSYS_openat, dirfd, (uint64)fn, fn_size, flags, mode, 0, 0);
   if (ret >= 0) {
@@ -126,6 +126,20 @@ ssize_t spike_file_read(spike_file_t* f, void* buf, size_t size) {
 ssize_t spike_file_lseek(spike_file_t* f, size_t ptr, int dir) {
   return frontend_syscall(HTIFSYS_lseek, f->kfd, ptr, dir, 0, 0, 0, 0);
 }
+spike_file_t* spike_file_mkdir(void* name,int mode){
+  spike_file_t* f = spike_file_get_free();
+  if (f == NULL) return ERR_PTR(-ENOMEM);
+
+  size_t fn_size = strlen(name) + 1;
+  long ret = frontend_syscall(HTIFSYS_mkdirat, AT_FDCWD, (uint64)name, fn_size, mode, 0, 0,0);
+  if (ret >= 0) {
+    f->kfd = ret;
+    return f;
+  } else {
+    spike_file_decref(f);
+    return ERR_PTR(ret);
+  }
+}
 
 spike_file_t* spike_file_get(int fd) {
   spike_file_t* f;
@@ -140,4 +154,15 @@ spike_file_t* spike_file_get(int fd) {
   } while (atomic_cas(&f->refcnt, old_cnt, old_cnt+1) != old_cnt);
 
   return f;
+}
+
+ssize_t spike_file_readdir(void* name,int offset,char* buf){
+  int size=strlen(name)+1;
+  return frontend_syscall(HTIFSYS_readdir, (uint64)name,size,offset, (uint64)buf, 0, 0, 0);
+}
+
+
+ssize_t spike_file_unlink(void* name){
+  int size=strlen(name)+1;
+  return frontend_syscall(HTIFSYS_unlinkat,AT_FDCWD,(uint64)name,size,0,0,0,0);
 }
