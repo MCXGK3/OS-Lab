@@ -30,6 +30,9 @@ int beginwith(char* s1,char* s2){
 
 void scan(){
   // printu("%d  %d  %p\n",input_offset,input_cursor,inputbuf);
+  char path[40];
+  read_cwd(path);
+  printu("%s",path);
   printu(">>>");
   memset(inputbuf,0,sizeof(inputbuf));
   input_cursor=0;
@@ -206,6 +209,9 @@ void scan(){
     for(int i=input_offset;i>input_cursor;i--)printu("\b");
     }
     }
+    else if(c==0){
+      goto onecharover;
+    }
     else{
       // printu("%d ",c);
     // printu("input %c\n",c);
@@ -303,7 +309,13 @@ int main(int argc, char *argv[]) {
   }
   else{
     // printu("wait\n");
+    if(!strcmp(para[paranum-1],"another")){
+      printu("puttask\n");
+      puttask(pid);
+    }
+    else{
     wait(pid);
+    }
   }
   once_over:;
   }

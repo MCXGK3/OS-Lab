@@ -50,6 +50,20 @@ int printu(const char* s, ...) {
   return do_user_call(SYS_user_print, (uint64)buf, n, 0, 0, 0, 0, 0);
 }
 
+int print_with_hartid(const char* s, ...){
+  va_list vl;
+  va_start(vl, s);
+
+  char out[256];  // fixed buffer size.
+  int res = vsnprintf(out, sizeof(out), s, vl);
+  va_end(vl);
+  const char* buf = out;
+  size_t n = res < sizeof(out) ? res : sizeof(out);
+
+  // make a syscall to implement the required functionality.
+  return do_user_call(SYS_user_print, (uint64)buf, n, 1, 0, 0, 0, 0);
+}
+
 //
 // applications need to call exit to quit execution.
 //
@@ -190,7 +204,9 @@ int scanu(char* buf){
 }
 
 char getcharu(){
-  return do_user_call(SYS_user_getchar,0,0,0,0,0,0,0);
+  char c=do_user_call(SYS_user_getchar,0,0,0,0,0,0,0);
+  // printu("%d ",c);
+  return c;
 }
 
 int print_backtrace(int layer){
@@ -414,4 +430,11 @@ int change_cwd(const char *path) {
   return do_user_call(SYS_user_ccwd, (uint64)path, 0, 0, 0, 0, 0, 0);
 }
 
-
+int puttask(int pid){
+  return do_user_call(SYS_user_puttask,pid,0,0,0,0,0,0);}
+int checktask(){
+  return do_user_call(SYS_user_checktask,0,0,0,0,0,0,0);
+}
+int gettask(){
+  return do_user_call(SYS_user_gettask,0,0,0,0,0,0,0);
+}

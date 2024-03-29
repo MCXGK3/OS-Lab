@@ -26,17 +26,98 @@ int exit_barrier=0;
 int sem_light[32];
 int semnum=0;
 process* sem_pro[32];
-
+extern process* ready_queue_head[NCPU];
+process* task;
 spinlock_t sem_lock=SPINLOCK_INIT;
+
+spinlock_t task_lock=SPINLOCK_INIT;
+
+ssize_t sys_user_checktask(){
+  if(task==NULL) return 0;
+  else return 1;
+}
+
+ssize_t sys_user_gettask(){
+  spinlock_lock(&task_lock);
+  if(task==NULL){
+    spinlock_unlock(&task_lock);
+    return -1;
+  }
+  process* newtask=task;
+  task=task->queue_next;
+  spinlock_unlock(&task_lock);
+  newtask->trapframe->regs.tp=read_tp();
+  newtask->wait=0;
+  newtask->parent=current[read_tp()];
+  insert_to_ready_queue(newtask);
+  return newtask->pid;
+}
+
+ssize_t sys_user_puttask(int pid){
+  int tp=read_tp();
+  spinlock_lock(&task_lock);
+  process* newtask=ready_queue_head[tp];
+  bool flag=0;
+  if(newtask->pid==pid && newtask->parent==current[tp]){
+    if(newtask->wait){spinlock_unlock(&task_lock); return -1;}
+    ready_queue_head[tp]=newtask->queue_next;
+    flag=1;
+  }
+  else if(newtask->queue_next!=NULL){
+    if(newtask->queue_next->pid==pid && newtask->queue_next->parent==current[tp]){
+      newtask=newtask->queue_next;
+      if(newtask->wait){spinlock_unlock(&task_lock); return -1;}
+      ready_queue_head[tp]->queue_next=newtask->queue_next;
+      flag=1;
+    }
+    else{
+      for(process* p=ready_queue_head[tp];p->queue_next->queue_next!=NULL;p=p->queue_next){
+        if(p->queue_next->pid==pid && p->queue_next->parent==current[tp]){
+          newtask=p->queue_next;
+          if(newtask->wait){spinlock_unlock(&task_lock); return -1;}
+          p->queue_next=newtask->queue_next;
+          flag=1;
+        }
+      }
+    }
+  }
+  if(flag){
+    newtask->queue_next=NULL;
+    if(task==NULL) task=newtask;
+    else{
+      process *p;
+      for(p=task;p->queue_next!=NULL;p=p->queue_next){
+        if(p==newtask){
+          spinlock_unlock(&task_lock);
+          return -2;
+        }
+      }
+      if(p==newtask){
+          spinlock_unlock(&task_lock);
+          return -2;
+        }
+      p->queue_next=newtask;
+    }
+    spinlock_unlock(&task_lock);
+    return 0;
+  }
+  spinlock_unlock(&task_lock);
+  return -1;
+}
 //
 // implement the SYS_user_print syscall
 //
-ssize_t sys_user_print(const char* buf, size_t n) {
+ssize_t sys_user_print(const char* buf, size_t n,bool with_hartid) {
   // buf is now an address in user space of the given app's user stack,
   // so we have to transfer it into phisical address (kernel is running in direct mapping).
   assert( current[read_tp()] );
   char* pa = (char*)user_va_to_pa((pagetable_t)(current[read_tp()]->pagetable), (void*)buf);
-  printerr(pa);
+  if(with_hartid){
+  printerr("hartid=%d:%s",read_tp(),pa);
+  }
+  else{
+    printerr(pa);
+  }
   return n;
 }
 
@@ -394,7 +475,7 @@ ssize_t sys_user_ccwd(char * pathva){
 long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, long a6, long a7) {
   switch (a0) {
     case SYS_user_print:
-      return sys_user_print((const char*)a1, a2);
+      return sys_user_print((const char*)a1, a2,a3);
     case SYS_user_exit:
       return sys_user_exit(a1);
     // added @lab2_2
@@ -458,6 +539,12 @@ long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, long a6, l
       return sys_user_rcwd((char *)a1);
     case SYS_user_ccwd:
       return sys_user_ccwd((char *)a1);
+    case SYS_user_puttask:
+      return sys_user_puttask(a1);
+    case SYS_user_checktask:
+      return sys_user_checktask();
+    case SYS_user_gettask:
+      return sys_user_gettask();
     default:
       panic("Unknown syscall %ld \n", a0);
   }

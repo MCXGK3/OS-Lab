@@ -40,7 +40,7 @@ static uint64 g_ticks[NCPU] = {0};
 // added @lab1_3
 //
 void handle_mtimer_trap() {
-  sprint("Ticks %d\n", g_ticks[read_tp()]);
+  sprint("hartid=%d  Ticks %d\n",read_tp() ,g_ticks[read_tp()]);
   // TODO (lab1_3): increase g_ticks to record this "tick", and then clear the "SIP"
   // field in sip register.
   // hint: use write_csr to disable the SIP_SSIP bit in sip.
@@ -77,7 +77,6 @@ void handle_user_page_fault(uint64 mcause, uint64 sepc, uint64 stval) {
         current[read_tp()]->mapped_info[STACK_SEGMENT].npages++;
         current[read_tp()]->mapped_info[STACK_SEGMENT].va-=PGSIZE;
         uint64 pa=(uint64)alloc_page();
-        sprint("alloc pa %p\n",pa);
       map_pages(current[read_tp()]->pagetable,ROUNDDOWN(stval,PGSIZE),PGSIZE,(uint64)pa,prot_to_type(PROT_WRITE | PROT_READ, 1));
       }
       else{

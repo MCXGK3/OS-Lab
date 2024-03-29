@@ -15,6 +15,7 @@ typedef struct memory_block_t
 
 
 int printu(const char *s, ...);
+int print_with_hartid(const char* s, ...);
 int exit(int code);
 void* naive_malloc();
 void naive_free(void* va);
@@ -60,5 +61,8 @@ void printpa(void* va);
 
 int read_cwd(char *path);
 int change_cwd(const char *path);
+int puttask(int pid);
+int checktask();
+int gettask();
 void LibInit();
 #endif
