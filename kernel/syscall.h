@@ -56,6 +56,15 @@
 #define SYS_user_checktask  (SYS_user_base + 42)
 #define SYS_user_gettask  (SYS_user_base + 43)
 
+#define SYS_user_kill     (SYS_user_base + 44)
+
+#define SYS_user_procstatus (SYS_user_base + 45)
+#define SYS_user_getstatus (SYS_user_base + 46)
+
+#define SYS_user_shutdown  (SYS_user_base + 47)
+
+#define SYS_user_ps        (SYS_user_base + 48)
+
 long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, long a6, long a7);
 
 #endif

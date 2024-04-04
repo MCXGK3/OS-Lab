@@ -185,8 +185,10 @@ ssize_t hostfs_write(struct vinode *f_inode, const char *w_buf, ssize_t len,
 //
 struct vinode *hostfs_lookup(struct vinode *parent, struct dentry *sub_dentry) {
   // get complete path string
+  // printerr("parent is %s",parent);
   char path[MAX_PATH_LEN];
   get_path_string(path, sub_dentry);
+  // printerr("path is %s\n",path);
   spike_file_t *f = spike_file_open(path, O_RDWR, 0);
   if((int64)f==-2)return NULL;
   struct vinode *child_inode = hostfs_alloc_vinode(parent->sb);
@@ -203,7 +205,7 @@ struct vinode *hostfs_lookup(struct vinode *parent, struct dentry *sub_dentry) {
 struct vinode *hostfs_create(struct vinode *parent, struct dentry *sub_dentry) {
   char path[MAX_PATH_LEN];
   get_path_string(path, sub_dentry);
-
+  
   spike_file_t *f = spike_file_open(path, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
   if ((int64)f < 0) {
     sprint("hostfs_create cannot create the given file.\n");
@@ -245,8 +247,14 @@ int hostfs_link(struct vinode *parent, struct dentry *sub_dentry,
 int hostfs_unlink(struct vinode *parent, struct dentry *sub_dentry, struct vinode *unlink_node) {
   char path[MAX_FILE_NAME_LEN];
   get_path_string(path,sub_dentry);
-  spike_file_unlink(path);
-  return -1;
+  int ret;
+  // printerr("type is %d\n",sub_dentry->dentry_inode->type);
+  if(sub_dentry->dentry_inode->type==DIR_I)
+    ret=spike_file_unlink(path,AT_REMOVEDIR);
+  else{
+    ret=spike_file_unlink(path,0);
+  }
+  return ret;
 }
 
 int hostfs_readdir(struct dentry *dir_dentry, struct dir *dir, int *offset) {

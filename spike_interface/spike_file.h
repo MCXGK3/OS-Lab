@@ -64,6 +64,6 @@ int spike_file_truncate(spike_file_t* f, off_t len);
 int spike_file_stat(spike_file_t* f, struct stat* s);
 spike_file_t* spike_file_get(int fd);
 ssize_t spike_file_readdir(void* name,int offset,char* buf);
-ssize_t spike_file_unlink(void* name);
+ssize_t spike_file_unlink(void* name,int flag);
 
 #endif

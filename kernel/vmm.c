@@ -204,6 +204,7 @@ void user_vm_unmap(pagetable_t page_dir, uint64 va, uint64 size, int free) {
   pte_t *p=page_walk(page_dir,va,0);
   if(free){
     uint64 pa=lookup_pa(page_dir,va);
+    // printerr("pa is %p\n",pa);
     free_page((void *)pa);
   }
   *p&=((~0)-1);

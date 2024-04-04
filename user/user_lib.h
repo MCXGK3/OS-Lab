@@ -65,4 +65,10 @@ int puttask(int pid);
 int checktask();
 int gettask();
 void LibInit();
+int kill(int pid);
+void setstatus(int status);
+
+int getstatus();
+void shutdown();
+void ps();
 #endif

@@ -114,10 +114,11 @@ struct file *vfs_open(const char *path, int flags) {
   if(current[read_tp()]!=NULL){
     parent=current[read_tp()]->pfiles->cwd;
   }
+  if(path[0]=='/') parent=vfs_root_dentry;
   char miss_name[MAX_PATH_LEN];
-
+  // printerr("path is %s\n",path);
   // path lookup.
-  struct dentry *file_dentry = lookup_final_dentry(path, parent, miss_name);
+  struct dentry *file_dentry = lookup_final_dentry(path, &parent, miss_name);
   // file does not exist
   if (!file_dentry) {
     int creatable = flags & O_CREAT;
@@ -136,7 +137,7 @@ struct file *vfs_open(const char *path, int flags) {
       // create the file
       file_dentry = alloc_vfs_dentry(basename, NULL, parent);
       struct vinode *new_inode = viop_create(parent->dentry_inode, file_dentry);
-      sprint("type %d\n",new_inode->type);
+      // sprint("type %d\n",new_inode->type);
       if (!new_inode) panic("vfs_open: cannot create file!\n");
 
       file_dentry->dentry_inode = new_inode;
@@ -148,7 +149,7 @@ struct file *vfs_open(const char *path, int flags) {
       return NULL;
     }
   }
-
+  // printerr("name is %s\n",file_dentry->name);
   if (file_dentry->dentry_inode->type != FILE_I) {
     sprint("vfs_open: cannot open a directory!\n");
     return NULL;
@@ -269,7 +270,7 @@ int vfs_link(const char *oldpath, const char *newpath) {
 
   // lookup oldpath
   struct dentry *old_file_dentry =
-      lookup_final_dentry(oldpath, parent, miss_name);
+      lookup_final_dentry(oldpath, &parent, miss_name);
   if (!old_file_dentry) {
     sprint("vfs_link: cannot find the file!\n");
     return -1;
@@ -284,7 +285,7 @@ int vfs_link(const char *oldpath, const char *newpath) {
   // lookup the newpath
   // note that parent is changed to be the last directory entry to be accessed
   struct dentry *new_file_dentry =
-      lookup_final_dentry(newpath, parent, miss_name);
+      lookup_final_dentry(newpath, &parent, miss_name);
   if (new_file_dentry) {
     sprint("vfs_link: the new file already exists!\n");
     return -1;
@@ -315,23 +316,24 @@ int vfs_link(const char *oldpath, const char *newpath) {
 //
 int vfs_unlink(const char *path) {
   struct dentry *parent = current[read_tp()]->pfiles->cwd;
+  if(path[0]=='/') parent=vfs_root_dentry;
   char miss_name[MAX_PATH_LEN];
 
   // lookup the file, find its parent direntry
-  struct dentry *file_dentry = lookup_final_dentry(path, parent, miss_name);
+  struct dentry *file_dentry = lookup_final_dentry(path, &parent, miss_name);
   if (!file_dentry) {
-    sprint("vfs_unlink: cannot find the file!\n");
-    return -1;
+    printerr("vfs_unlink: cannot find %s!\n",path);
+    return -2;
   }
 
-  if (file_dentry->dentry_inode->type != FILE_I) {
-    sprint("vfs_unlink: cannot unlink a directory!\n");
-    return -1;
-  }
+  // if (file_dentry->dentry_inode->type != FILE_I) {
+  //   sprint("vfs_unlink: cannot unlink a directory!\n");
+  //   return -1;
+  // }
 
   if (file_dentry->d_ref > 0) {
-    sprint("vfs_unlink: the file is still opened!\n");
-    return -1;
+    printerr("vfs_unlink: %s is still opened!\n",path);
+    return -3;
   }
 
   // do the real unlink
@@ -373,8 +375,9 @@ int vfs_close(struct file *file) {
   // additional close operations for a specific file system
   // hostfs needs to conduct actual file close.
   if (inode->i_ops->viop_hook_close) {
+    // printerr("free %p\n",inode->i_fs_info);
     if (inode->i_ops->viop_hook_close(inode, dentry) != 0) {
-      sprint("vfs_close: hook_close failed!\n");
+      panic("vfs_close: hook_close failed!\n");
     }
   }
 
@@ -404,10 +407,11 @@ int vfs_close(struct file *file) {
 //
 struct file *vfs_opendir(const char *path) {
   struct dentry *parent = current[read_tp()]->pfiles->cwd;
+  if(path[0]=='/') parent=vfs_root_dentry;
   char miss_name[MAX_PATH_LEN];
 
   // lookup the dir
-  struct dentry *file_dentry = lookup_final_dentry(path, parent, miss_name);
+  struct dentry *file_dentry = lookup_final_dentry(path, &parent, miss_name);
 
   if (!file_dentry || file_dentry->dentry_inode->type != DIR_I) {
     sprint("vfs_opendir: cannot find the direntry!\n");
@@ -448,10 +452,11 @@ int vfs_readdir(struct file *file, struct dir *dir) {
 //
 int vfs_mkdir(const char *path) {
   struct dentry *parent = current[read_tp()]->pfiles->cwd;
+  if(path[0]=='/') parent=vfs_root_dentry;
   char miss_name[MAX_PATH_LEN];
 
   // lookup the dir, find its parent direntry
-  struct dentry *file_dentry = lookup_final_dentry(path, parent, miss_name);
+  struct dentry *file_dentry = lookup_final_dentry(path, &parent, miss_name);
   if (file_dentry) {
     sprint("vfs_mkdir: the directory already exists!\n");
     return -1;
@@ -529,7 +534,7 @@ int vfs_ccwd(const char *path){
   // printerr("%s\n",path);
 
   // lookup the dir
-  struct dentry *file_dentry = lookup_final_dentry(path, parent, miss_name);
+  struct dentry *file_dentry = lookup_final_dentry(path, &parent, miss_name);
   if(file_dentry==NULL){
     return -1;
   }
@@ -542,7 +547,7 @@ int vfs_ccwd(const char *path){
 // the lookup starts from parent, and stop till the full "path" is parsed.
 // return: the final dentry if we find it, NULL for otherwise.
 //
-struct dentry *lookup_final_dentry(const char *path, struct dentry *parent,
+struct dentry *lookup_final_dentry(const char *path, struct dentry **parent,
                                    char *miss_name) {
   char path_copy[MAX_PATH_LEN];
   strcpy(path_copy, path);
@@ -553,14 +558,14 @@ struct dentry *lookup_final_dentry(const char *path, struct dentry *parent,
   // for example, when input path is: /RAMDISK0/test_dir/ramfile2
   // strtok() outputs three tokens: 1)RAMDISK0, 2)test_dir and 3)ramfile2
   // at its three continuous invocations.
-  if(path_copy[0]=='/') parent=vfs_root_dentry;
+  if(path_copy[0]=='/') *parent=vfs_root_dentry;
   char *token = strtok(path_copy, "/");
-  // printerr("\ntoken is %s\n",token);
-  struct dentry *this = parent;
+  // printerr("\ntoken is %p\n",token);
+  struct dentry *this = *parent;
   // sprint("1234\n");
   // sprint("%p\n",current[read_tp()]);
   bool flag=0;
-  if(token==NULL) return parent;
+  if(token==NULL) return *parent;
    if(!strcmp(token,".")){
       this=current[read_tp()]->pfiles->cwd;
       // sprint("%s\n",this->name);
@@ -573,7 +578,7 @@ struct dentry *lookup_final_dentry(const char *path, struct dentry *parent,
   if(flag){
   token = strtok(NULL, "/");}
   while (token != NULL) {
-    // sprint("%s\n",token);
+    // printerr("%s\n",token);
     if(!strcmp(token,".")){
       this=this;
     }
@@ -583,16 +588,18 @@ struct dentry *lookup_final_dentry(const char *path, struct dentry *parent,
       this=this->parent;
     }
     else{
-    parent = this;
-    this = hash_get_dentry((parent), token);  // try hash first
+    *parent = this;
+    this = hash_get_dentry((*parent), token);  // try hash first
     if (this == NULL) {
+      // printerr("this is NULL\n");
       // if not found in hash, try to find it in the directory
-      this = alloc_vfs_dentry(token, NULL, parent);
+      this = alloc_vfs_dentry(token, NULL, *parent);
       // lookup subfolder/file in its parent directory. note:
       // hostfs and rfs will take different procedures for lookup.
-      struct vinode *found_vinode = viop_lookup((parent)->dentry_inode, this);
+      struct vinode *found_vinode = viop_lookup((*parent)->dentry_inode, this);
       if (found_vinode == NULL) {
         // not found in both hash table and directory file on disk.
+        // printerr("free NULL\n");
         free_page(this);
         strcpy(miss_name, token);
         return NULL;
@@ -662,7 +669,6 @@ struct dentry *alloc_vfs_dentry(const char *name, struct vinode *inode,
   strcpy(dentry->name, name);
   dentry->dentry_inode = inode;
   if (inode) inode->ref++;
-
   dentry->parent = parent;
   dentry->d_ref = 0;
   return dentry;

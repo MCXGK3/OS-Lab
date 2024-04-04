@@ -11,11 +11,11 @@ int main(void) {
     p[i] = naive_malloc();
     int *pi = p[i];
     *pi = BASE + i;
-    printu(">>> user alloc 1 @ vaddr 0x%x\n", p[i]);
+    print_with_hartid(">>> user alloc 1 @ vaddr 0x%x\n", p[i]);
   }
   for (int i = 0; i < N; i++) {
     int *pi = p[i];
-    printu(">>> user 1: %d\n", *pi);
+    print_with_hartid(">>> user 1: %d\n", *pi);
     naive_free(p[i]);
   }
 

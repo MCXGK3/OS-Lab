@@ -5,4 +5,3 @@
 /bin/app_cat /RAMDISK0/sub_dir/ramfile1
 /bin/app_ls /RAMDISK0/sub_dir
 /bin/app_ls /RAMDISK0
-END END END

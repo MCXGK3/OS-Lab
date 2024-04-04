@@ -438,3 +438,23 @@ int checktask(){
 int gettask(){
   return do_user_call(SYS_user_gettask,0,0,0,0,0,0,0);
 }
+
+int kill(int pid){
+  return do_user_call(SYS_user_kill,pid,0,0,0,0,0,0);
+}
+
+void setstatus(int status){
+  do_user_call(SYS_user_procstatus,status,0,0,0,0,0,0);
+  return;
+}
+
+int getstatus(){
+  return do_user_call(SYS_user_getstatus,0,0,0,0,0,0,0);
+}
+
+void shutdown(){
+  do_user_call(SYS_user_shutdown,0,0,0,0,0,0,0);
+}
+void ps(){
+  do_user_call(SYS_user_ps,0,0,0,0,0,0,0);
+}

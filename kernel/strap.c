@@ -66,7 +66,7 @@ void handle_user_page_fault(uint64 mcause, uint64 sepc, uint64 stval) {
       // virtual address that causes the page fault.
       //panic( "You need to implement the operations that actually handle the page fault in lab2_3.\n" );
       pte_t* pte=page_walk(current[read_tp()]->pagetable,ROUNDDOWN(stval,PGSIZE),0);
-      if(*pte&&(1<<8)){
+      if(*pte&&(PTE_F)){
         void* parentpage=user_va_to_pa(current[read_tp()]->pagetable,(void*)ROUNDDOWN(stval,PGSIZE));
         user_vm_unmap(current[read_tp()]->pagetable,ROUNDDOWN(stval,PGSIZE),PGSIZE,0);
         void* childpage=alloc_page();
@@ -103,6 +103,7 @@ void rrsched() {
   // place it in the rear of ready queue, and finally schedule next process to run.
   if(current[hartid]->tick_count+1>=TIME_SLICE_LEN){
     current[hartid]->tick_count=0;
+    // printerr("%d change process\n",hartid);
     insert_to_ready_queue(current[read_tp()]);
     schedule();
   }

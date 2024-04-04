@@ -4,16 +4,18 @@
 
 int main(int argc,char* argv[]) {
     if(argc==0){
+      setstatus(-1);
         printu("Need Arguments!!!\n");
     }
     else{
   int fd=open(argv[0],O_RDONLY);
   if(fd<0){
+    setstatus(-1);
     printu("Open Failed!!!\n");
   }
   else{
-  char buf[6000];
-  read_u(fd,buf,6000);
+  char buf[4000];
+  read_u(fd,buf,4000);
     // strcpy(buf,"123456789123456789123456789");
   int off=0;
   while (off<strlen(buf))

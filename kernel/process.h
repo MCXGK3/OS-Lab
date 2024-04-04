@@ -20,7 +20,7 @@ typedef struct trapframe_t {
 }trapframe;
 
 // riscv-pke kernel supports at most 32 processes
-#define NPROC 32
+#define NPROC 512
 // maximum number of pages in a process's heap
 #define MAX_HEAP_PAGES 32
 
@@ -88,7 +88,7 @@ typedef struct process_t {
 
   // heap management
   process_heap_manager user_heap;
-
+  char appname[30];
   // process id
   uint64 pid;
   // process status
@@ -108,7 +108,7 @@ typedef struct process_t {
   int values[64][2];
   char sym_names[64][20];
   int sym_count;
-  char debug_line[PGSIZE*10];
+  char debug_line[PGSIZE*15];
   char *debugline; char **dir; code_file *file; addr_line *line; int line_ind;
 
   // file system. added @lab4_1
@@ -126,8 +126,10 @@ process* alloc_process();
 int free_process( process* proc );
 // fork a child from parent
 int do_fork(process* parent);
+void do_ps();
 
-int realloc_proc(process* proc);
+int realloc_proc(process* proc,bool free);
+int do_kill(int pid);
 
 // current running process
 extern process* current[NCPU];

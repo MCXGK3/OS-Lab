@@ -3,167 +3,3741 @@ HTIF is available!
 In m_start, hartid:0
 Enter supervisor mode...
 tp:0
-PKE kernel start 0x0000000080000000, PKE kernel end: 0x0000000080167000, PKE kernel size: 0x0000000000167000 .
-free physical memory address: [0x0000000080167000, 0x0000000087ffffff] 
+PKE kernel start 0x0000000080000000, PKE kernel end: 0x0000000081f31000, PKE kernel size: 0x0000000001f31000 .
+free physical memory address: [0x0000000081f31000, 0x0000000087ffffff] 
 kernel memory manager is initializing ...
 In m_start, hartid:1
 Enter supervisor mode...
 tp:1
+In m_start, hartid:2
+Enter supervisor mode...
+tp:2
+In m_start, hartid:3
+Enter supervisor mode...
+tp:3
 _etext is 0x000000008000b000
 KERN_BASE 0x0000000080000000
 physical address of _etext is: 0x000000008000b000
 kernel page table is on 
 kernel page table is on 
-process size=43176
+kernel page table is on 
+kernel page table is on 
+process size=63688
 RAMDISK0: base address of RAMDISK0 is: 0x0000000087f35000
 RFS: format RAMDISK0 done!
 Switch to user mode...
 0
 Switch to user mode...
 1
+Switch to user mode...
+2
+Switch to user mode...
+3
 in alloc_proc. user frame 0x0000000087f29000, user stack 0x000000007ffff000, user kstack 0x0000000087f28000 
 FS: created a file management struct for a process.
 in alloc_proc. build proc_file_management successfully.
 User application is loading.
 Application: /bin/shell
 off 0
-4096 7004 5 7004 0 0x0000000000010000 1 0x0000000000010000
+4096 9124 5 9124 0 0x0000000000010000 1 0x0000000000010000
 va is 0x0000000000010000
-size is 7004
+size is 9124
 offset is 0x0000000000000000
-alloc pa:0x0000000087f09000
+alloc pa:0x0000000087ef5000
 in alloc_proc. user frame 0x0000000087f1f000, user stack 0x000000007ffff000, user kstack 0x0000000087f1e000 
 FS: created a file management struct for a process.
 in alloc_proc. build proc_file_management successfully.
 User application is loading.
 Application: /bin/shell_help
 off 0
-4096 3380 5 3380 0 0x0000000000010000 1 0x0000000000010000
+4096 3556 5 3556 0 0x0000000000010000 1 0x0000000000010000
 va is 0x0000000000010000
-size is 3380
+size is 3556
 offset is 0x0000000000000000
-alloc pa:0x0000000087efe000
+alloc pa:0x0000000087eea000
+in alloc_proc. user frame 0x0000000087f15000, user stack 0x000000007ffff000, user kstack 0x0000000087f14000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+User application is loading.
+Application: /bin/shell_help
+off 0
+4096 3556 5 3556 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3556
+offset is 0x0000000000000000
+alloc pa:0x0000000087ee5000
+in alloc_proc. user frame 0x0000000087f0b000, user stack 0x000000007ffff000, user kstack 0x0000000087f0a000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+User application is loading.
+Application: /bin/shell_help
+off 0
+4096 3556 5 3556 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3556
+offset is 0x0000000000000000
+alloc pa:0x0000000087ee0000
 nb is 4096
 offset is 0
 
-alloc pa:0x0000000087efb000
-nb is 2908
+alloc pa:0x0000000087edd000
+nb is 4096
 offset is 4096
 
-CODE_SEGMENT added at mapped info offset:4
-off 8192
-4096 24 6 2832 8192 0x0000000000012000 1 0x0000000000012000
-va is 0x0000000000012000
-size is 2832
-offset is 0x0000000000002000
-alloc pa:0x0000000087efa000
-nb is 2832
+alloc pa:0x0000000087edc000
+nb is 932
 offset is 8192
 
+CODE_SEGMENT added at mapped info offset:4
+off 9128
+4096 24 6 5784 9128 0x00000000000133a8 1 0x00000000000133a8
+va is 0x00000000000133a8
+size is 5784
+offset is 0x00000000000023a8
+alloc pa:0x0000000087edb000
+nb is 3160
+offset is 9128
+
+alloc pa:0x0000000087eda000
+nb is 2624
+offset is 12288
+
 DATA_SEGMENT added at mapped info offset:5
-debug size is 13392
-nb is 3380
+debug size is 16099
+nb is 3556
 offset is 0
 
 CODE_SEGMENT added at mapped info offset:4
-off 3384
-4096 0 6 16 3384 0x0000000000011d38 1 0x0000000000011d38
-va is 0x0000000000011d38
+off 3560
+4096 0 6 16 3560 0x0000000000011de8 1 0x0000000000011de8
+va is 0x0000000000011de8
 size is 16
-offset is 0x0000000000000d38
-alloc pa:0x0000000087ef9000
+offset is 0x0000000000000de8
+alloc pa:0x0000000087ed9000
 nb is 16
-offset is 3384
+offset is 3560
 
 DATA_SEGMENT added at mapped info offset:5
-debug size is 6465
-Application program entry point (virtual address): 0x00000000000109f8
+debug size is 6641
+nb is 3556
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3560
+4096 0 6 16 3560 0x0000000000011de8 1 0x0000000000011de8
+va is 0x0000000000011de8
+size is 16
+offset is 0x0000000000000de8
+alloc pa:0x0000000087ed8000
+nb is 16
+offset is 3560
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6641
+nb is 3556
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3560
+4096 0 6 16 3560 0x0000000000011de8 1 0x0000000000011de8
+va is 0x0000000000011de8
+size is 16
+offset is 0x0000000000000de8
+alloc pa:0x0000000087ed7000
+nb is 16
+offset is 3560
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6641
+Application program entry point (virtual address): 0x0000000000011224
 going to insert process 0 to ready queue.
-going to schedule process 0 to run.
+hartid=0 going to schedule process 0 to run.
 Application program entry point (virtual address): 0x00000000000100b0
 going to insert process 1 to ready queue.
-going to schedule process 1 to run.
-User call fork.
-will fork a child from parent 0.
-2
-in alloc_proc. user frame 0x0000000087f00000, user stack 0x000000007ffff000, user kstack 0x0000000087f0c000 
-FS: created a file management struct for a process.
-in alloc_proc. build proc_file_management successfully.
-stack_segment:0x000000007fffe000 0x0000000087ef8000
-do_fork map code segment at pa:0000000087f09000 of parent to child at va:0000000000010000.
+hartid=1 going to schedule process 1 to run.
+Application program entry point (virtual address): 0x00000000000100b0
 going to insert process 2 to ready queue.
-going to schedule process 2 to run.
-Application: cat
-off 0
-4096 4172 5 4172 0 0x0000000000010000 1 0x0000000000010000
-va is 0x0000000000010000
-size is 4172
-offset is 0x0000000000000000
-alloc pa:0x0000000087ee6000
-nb is 4096
-offset is 0
-
-alloc pa:0x0000000087ee5000
-nb is 76
-offset is 4096
-
-CODE_SEGMENT added at mapped info offset:4
-off 80
-4096 0 6 24 80 0x0000000000012050 1 0x0000000000012050
-va is 0x0000000000012050
-size is 24
-offset is 0x0000000000000050
-alloc pa:0x0000000087ee4000
-nb is 24
-offset is 80
-
-DATA_SEGMENT added at mapped info offset:5
-debug size is 9286
+hartid=2 going to schedule process 2 to run.
 Application program entry point (virtual address): 0x00000000000100b0
-handle_page_fault: 000000007fffd868
-User exit with code:0.
-going to insert process 0 to ready queue.
-going to schedule process 0 to run.
+going to insert process 3 to ready queue.
+hartid=3 going to schedule process 3 to run.
 User call fork.
 will fork a child from parent 0.
-3
-in alloc_proc. user frame 0x0000000087eed000, user stack 0x000000007ffff000, user kstack 0x0000000087edf000 
+4
+in alloc_proc. user frame 0x0000000087eec000, user stack 0x000000007ffff000, user kstack 0x0000000087ef2000 
 FS: created a file management struct for a process.
 in alloc_proc. build proc_file_management successfully.
-stack_segment:0x000000007fffe000 0x0000000087edd000
-do_fork map code segment at pa:0000000087f09000 of parent to child at va:0000000000010000.
-going to insert process 3 to ready queue.
-going to insert process 3 to ready queue.
-going to schedule process 3 to run.
-Application: cat
+stack_segment:0x000000007fffe000 0x0000000087ed5000
+do_fork map code segment at pa:0000000087ef5000 of parent to child at va:0000000000010000.
+going to insert process 4 to ready queue.
+hartid=0 going to schedule process 4 to run.
+Application: forktest
 off 0
-4096 4172 5 4172 0 0x0000000000010000 1 0x0000000000010000
+4096 3604 5 3604 0 0x0000000000010000 1 0x0000000000010000
 va is 0x0000000000010000
-size is 4172
+size is 3604
 offset is 0x0000000000000000
-alloc pa:0x0000000087ecb000
-nb is 4096
+alloc pa:0x0000000087ec2000
+nb is 3604
 offset is 0
 
-alloc pa:0x0000000087eca000
-nb is 76
-offset is 4096
-
 CODE_SEGMENT added at mapped info offset:4
-off 80
-4096 0 6 24 80 0x0000000000012050 1 0x0000000000012050
-va is 0x0000000000012050
-size is 24
-offset is 0x0000000000000050
-alloc pa:0x0000000087ec9000
-nb is 24
-offset is 80
+off 3608
+4096 0 6 16 3608 0x0000000000011e18 1 0x0000000000011e18
+va is 0x0000000000011e18
+size is 16
+offset is 0x0000000000000e18
+alloc pa:0x0000000087ec1000
+nb is 16
+offset is 3608
 
 DATA_SEGMENT added at mapped info offset:5
-debug size is 9286
+debug size is 6742
 Application program entry point (virtual address): 0x00000000000100b0
-handle_page_fault: 000000007fffd868
-User exit with code:0.
-going to insert process 1 to ready queue.
-going to schedule process 1 to run.
+User call fork.
+will fork a child from parent 4.
+5
+in alloc_proc. user frame 0x0000000087ec6000, user stack 0x000000007ffff000, user kstack 0x0000000087ec5000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087ec0000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 5 to ready queue.
+User call fork.
+will fork a child from parent 4.
+6
+in alloc_proc. user frame 0x0000000087eb5000, user stack 0x000000007ffff000, user kstack 0x0000000087eb4000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087eb2000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 6 to ready queue.
+User call fork.
+will fork a child from parent 4.
+7
+in alloc_proc. user frame 0x0000000087ea7000, user stack 0x000000007ffff000, user kstack 0x0000000087ea6000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087ea4000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 7 to ready queue.
+User call fork.
+will fork a child from parent 4.
+8
+in alloc_proc. user frame 0x0000000087e99000, user stack 0x000000007ffff000, user kstack 0x0000000087e98000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087e96000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 8 to ready queue.
+User call fork.
+will fork a child from parent 4.
+9
+in alloc_proc. user frame 0x0000000087e8b000, user stack 0x000000007ffff000, user kstack 0x0000000087e8a000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087e88000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 9 to ready queue.
+User call fork.
+will fork a child from parent 4.
+10
+in alloc_proc. user frame 0x0000000087e7d000, user stack 0x000000007ffff000, user kstack 0x0000000087e7c000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087e7a000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 10 to ready queue.
+User call fork.
+will fork a child from parent 4.
+11
+in alloc_proc. user frame 0x0000000087e6f000, user stack 0x000000007ffff000, user kstack 0x0000000087e6e000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087e6c000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 11 to ready queue.
+User call fork.
+will fork a child from parent 4.
+12
+in alloc_proc. user frame 0x0000000087e61000, user stack 0x000000007ffff000, user kstack 0x0000000087e60000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087e5e000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 12 to ready queue.
+User call fork.
+will fork a child from parent 4.
+13
+in alloc_proc. user frame 0x0000000087e53000, user stack 0x000000007ffff000, user kstack 0x0000000087e52000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087e50000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 13 to ready queue.
+User call fork.
+will fork a child from parent 4.
+14
+in alloc_proc. user frame 0x0000000087e45000, user stack 0x000000007ffff000, user kstack 0x0000000087e44000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087e42000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 14 to ready queue.
+User call fork.
+will fork a child from parent 4.
+15
+in alloc_proc. user frame 0x0000000087e37000, user stack 0x000000007ffff000, user kstack 0x0000000087e36000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087e34000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 15 to ready queue.
+User call fork.
+will fork a child from parent 4.
+16
+in alloc_proc. user frame 0x0000000087e29000, user stack 0x000000007ffff000, user kstack 0x0000000087e28000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087e26000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 16 to ready queue.
+User call fork.
+will fork a child from parent 4.
+17
+in alloc_proc. user frame 0x0000000087e1b000, user stack 0x000000007ffff000, user kstack 0x0000000087e1a000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087e18000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 17 to ready queue.
+User call fork.
+will fork a child from parent 4.
+18
+in alloc_proc. user frame 0x0000000087e0d000, user stack 0x000000007ffff000, user kstack 0x0000000087e0c000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087e0a000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 18 to ready queue.
+User call fork.
+will fork a child from parent 4.
+19
+in alloc_proc. user frame 0x0000000087dff000, user stack 0x000000007ffff000, user kstack 0x0000000087dfe000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087dfc000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 19 to ready queue.
+User call fork.
+will fork a child from parent 4.
+20
+in alloc_proc. user frame 0x0000000087df1000, user stack 0x000000007ffff000, user kstack 0x0000000087df0000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087dee000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 20 to ready queue.
+User call fork.
+will fork a child from parent 4.
+21
+in alloc_proc. user frame 0x0000000087de3000, user stack 0x000000007ffff000, user kstack 0x0000000087de2000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087de0000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 21 to ready queue.
+User call fork.
+will fork a child from parent 4.
+22
+in alloc_proc. user frame 0x0000000087dd5000, user stack 0x000000007ffff000, user kstack 0x0000000087dd4000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087dd2000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 22 to ready queue.
+User call fork.
+will fork a child from parent 4.
+23
+in alloc_proc. user frame 0x0000000087dc7000, user stack 0x000000007ffff000, user kstack 0x0000000087dc6000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087dc4000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 23 to ready queue.
+User call fork.
+will fork a child from parent 4.
+24
+in alloc_proc. user frame 0x0000000087db9000, user stack 0x000000007ffff000, user kstack 0x0000000087db8000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087db6000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 24 to ready queue.
+User call fork.
+will fork a child from parent 4.
+25
+in alloc_proc. user frame 0x0000000087dab000, user stack 0x000000007ffff000, user kstack 0x0000000087daa000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087da8000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 25 to ready queue.
+User call fork.
+will fork a child from parent 4.
+26
+in alloc_proc. user frame 0x0000000087d9d000, user stack 0x000000007ffff000, user kstack 0x0000000087d9c000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087d9a000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 26 to ready queue.
+User call fork.
+will fork a child from parent 4.
+27
+in alloc_proc. user frame 0x0000000087d8f000, user stack 0x000000007ffff000, user kstack 0x0000000087d8e000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087d8c000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 27 to ready queue.
+User call fork.
+will fork a child from parent 4.
+28
+in alloc_proc. user frame 0x0000000087d81000, user stack 0x000000007ffff000, user kstack 0x0000000087d80000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087d7e000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 28 to ready queue.
+User call fork.
+will fork a child from parent 4.
+29
+in alloc_proc. user frame 0x0000000087d73000, user stack 0x000000007ffff000, user kstack 0x0000000087d72000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087d70000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 29 to ready queue.
+User call fork.
+will fork a child from parent 4.
+30
+in alloc_proc. user frame 0x0000000087d65000, user stack 0x000000007ffff000, user kstack 0x0000000087d64000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087d62000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 30 to ready queue.
+User call fork.
+will fork a child from parent 4.
+31
+in alloc_proc. user frame 0x0000000087d57000, user stack 0x000000007ffff000, user kstack 0x0000000087d56000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087d54000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 31 to ready queue.
+User call fork.
+will fork a child from parent 4.
+32
+in alloc_proc. user frame 0x0000000087d49000, user stack 0x000000007ffff000, user kstack 0x0000000087d48000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087d46000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 32 to ready queue.
+User call fork.
+will fork a child from parent 4.
+33
+in alloc_proc. user frame 0x0000000087d3b000, user stack 0x000000007ffff000, user kstack 0x0000000087d3a000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087d38000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 33 to ready queue.
+User call fork.
+will fork a child from parent 4.
+34
+in alloc_proc. user frame 0x0000000087d2d000, user stack 0x000000007ffff000, user kstack 0x0000000087d2c000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087d2a000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 34 to ready queue.
+User call fork.
+will fork a child from parent 4.
+35
+in alloc_proc. user frame 0x0000000087d1f000, user stack 0x000000007ffff000, user kstack 0x0000000087d1e000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087d1c000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 35 to ready queue.
+User call fork.
+will fork a child from parent 4.
+36
+in alloc_proc. user frame 0x0000000087d11000, user stack 0x000000007ffff000, user kstack 0x0000000087d10000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087d0e000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 36 to ready queue.
+User call fork.
+will fork a child from parent 4.
+37
+in alloc_proc. user frame 0x0000000087d03000, user stack 0x000000007ffff000, user kstack 0x0000000087d02000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087d00000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 37 to ready queue.
+User call fork.
+will fork a child from parent 4.
+38
+in alloc_proc. user frame 0x0000000087cf5000, user stack 0x000000007ffff000, user kstack 0x0000000087cf4000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087cf2000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 38 to ready queue.
+User call fork.
+will fork a child from parent 4.
+39
+in alloc_proc. user frame 0x0000000087ce7000, user stack 0x000000007ffff000, user kstack 0x0000000087ce6000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087ce4000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 39 to ready queue.
+User call fork.
+will fork a child from parent 4.
+40
+in alloc_proc. user frame 0x0000000087cd9000, user stack 0x000000007ffff000, user kstack 0x0000000087cd8000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087cd6000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 40 to ready queue.
+User call fork.
+will fork a child from parent 4.
+41
+in alloc_proc. user frame 0x0000000087ccb000, user stack 0x000000007ffff000, user kstack 0x0000000087cca000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087cc8000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 41 to ready queue.
+User call fork.
+will fork a child from parent 4.
+42
+in alloc_proc. user frame 0x0000000087cbd000, user stack 0x000000007ffff000, user kstack 0x0000000087cbc000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087cba000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 42 to ready queue.
+User call fork.
+will fork a child from parent 4.
+43
+in alloc_proc. user frame 0x0000000087caf000, user stack 0x000000007ffff000, user kstack 0x0000000087cae000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087cac000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 43 to ready queue.
+User call fork.
+will fork a child from parent 4.
+44
+in alloc_proc. user frame 0x0000000087ca1000, user stack 0x000000007ffff000, user kstack 0x0000000087ca0000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087c9e000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 44 to ready queue.
+User call fork.
+will fork a child from parent 4.
+45
+in alloc_proc. user frame 0x0000000087c93000, user stack 0x000000007ffff000, user kstack 0x0000000087c92000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087c90000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 45 to ready queue.
+User call fork.
+will fork a child from parent 4.
+46
+in alloc_proc. user frame 0x0000000087c85000, user stack 0x000000007ffff000, user kstack 0x0000000087c84000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087c82000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 46 to ready queue.
+User call fork.
+will fork a child from parent 4.
+47
+in alloc_proc. user frame 0x0000000087c77000, user stack 0x000000007ffff000, user kstack 0x0000000087c76000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087c74000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 47 to ready queue.
+User call fork.
+will fork a child from parent 4.
+48
+in alloc_proc. user frame 0x0000000087c69000, user stack 0x000000007ffff000, user kstack 0x0000000087c68000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087c66000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 48 to ready queue.
+User call fork.
+will fork a child from parent 4.
+49
+in alloc_proc. user frame 0x0000000087c5b000, user stack 0x000000007ffff000, user kstack 0x0000000087c5a000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087c58000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 49 to ready queue.
+User call fork.
+will fork a child from parent 4.
+50
+in alloc_proc. user frame 0x0000000087c4d000, user stack 0x000000007ffff000, user kstack 0x0000000087c4c000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087c4a000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 50 to ready queue.
+User call fork.
+will fork a child from parent 4.
+51
+in alloc_proc. user frame 0x0000000087c3f000, user stack 0x000000007ffff000, user kstack 0x0000000087c3e000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087c3c000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 51 to ready queue.
+User call fork.
+will fork a child from parent 4.
+52
+in alloc_proc. user frame 0x0000000087c31000, user stack 0x000000007ffff000, user kstack 0x0000000087c30000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087c2e000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 52 to ready queue.
+User call fork.
+will fork a child from parent 4.
+53
+in alloc_proc. user frame 0x0000000087c23000, user stack 0x000000007ffff000, user kstack 0x0000000087c22000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087c20000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 53 to ready queue.
+User call fork.
+will fork a child from parent 4.
+54
+in alloc_proc. user frame 0x0000000087c15000, user stack 0x000000007ffff000, user kstack 0x0000000087c14000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087c12000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 54 to ready queue.
+User call fork.
+will fork a child from parent 4.
+55
+in alloc_proc. user frame 0x0000000087c07000, user stack 0x000000007ffff000, user kstack 0x0000000087c06000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087c04000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 55 to ready queue.
+User call fork.
+will fork a child from parent 4.
+56
+in alloc_proc. user frame 0x0000000087bf9000, user stack 0x000000007ffff000, user kstack 0x0000000087bf8000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087bf6000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 56 to ready queue.
+User call fork.
+will fork a child from parent 4.
+57
+in alloc_proc. user frame 0x0000000087beb000, user stack 0x000000007ffff000, user kstack 0x0000000087bea000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087be8000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 57 to ready queue.
+User call fork.
+will fork a child from parent 4.
+58
+in alloc_proc. user frame 0x0000000087bdd000, user stack 0x000000007ffff000, user kstack 0x0000000087bdc000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087bda000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 58 to ready queue.
+User call fork.
+will fork a child from parent 4.
+59
+in alloc_proc. user frame 0x0000000087bcf000, user stack 0x000000007ffff000, user kstack 0x0000000087bce000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087bcc000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 59 to ready queue.
+User call fork.
+will fork a child from parent 4.
+60
+in alloc_proc. user frame 0x0000000087bc1000, user stack 0x000000007ffff000, user kstack 0x0000000087bc0000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087bbe000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 60 to ready queue.
+User call fork.
+will fork a child from parent 4.
+61
+in alloc_proc. user frame 0x0000000087bb3000, user stack 0x000000007ffff000, user kstack 0x0000000087bb2000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087bb0000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 61 to ready queue.
+User call fork.
+will fork a child from parent 4.
+62
+in alloc_proc. user frame 0x0000000087ba5000, user stack 0x000000007ffff000, user kstack 0x0000000087ba4000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087ba2000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 62 to ready queue.
+User call fork.
+will fork a child from parent 4.
+63
+in alloc_proc. user frame 0x0000000087b97000, user stack 0x000000007ffff000, user kstack 0x0000000087b96000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087b94000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 63 to ready queue.
+User call fork.
+will fork a child from parent 4.
+64
+in alloc_proc. user frame 0x0000000087b89000, user stack 0x000000007ffff000, user kstack 0x0000000087b88000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087b86000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 64 to ready queue.
+User call fork.
+will fork a child from parent 4.
+65
+in alloc_proc. user frame 0x0000000087b7b000, user stack 0x000000007ffff000, user kstack 0x0000000087b7a000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087b78000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 65 to ready queue.
+User call fork.
+will fork a child from parent 4.
+66
+in alloc_proc. user frame 0x0000000087b6d000, user stack 0x000000007ffff000, user kstack 0x0000000087b6c000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087b6a000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 66 to ready queue.
+User call fork.
+will fork a child from parent 4.
+67
+in alloc_proc. user frame 0x0000000087b5f000, user stack 0x000000007ffff000, user kstack 0x0000000087b5e000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087b5c000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 67 to ready queue.
+User call fork.
+will fork a child from parent 4.
+68
+in alloc_proc. user frame 0x0000000087b51000, user stack 0x000000007ffff000, user kstack 0x0000000087b50000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087b4e000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 68 to ready queue.
+User call fork.
+will fork a child from parent 4.
+69
+in alloc_proc. user frame 0x0000000087b43000, user stack 0x000000007ffff000, user kstack 0x0000000087b42000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087b40000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 69 to ready queue.
+User call fork.
+will fork a child from parent 4.
+70
+in alloc_proc. user frame 0x0000000087b35000, user stack 0x000000007ffff000, user kstack 0x0000000087b34000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087b32000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 70 to ready queue.
+User call fork.
+will fork a child from parent 4.
+71
+in alloc_proc. user frame 0x0000000087b27000, user stack 0x000000007ffff000, user kstack 0x0000000087b26000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087b24000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 71 to ready queue.
+User call fork.
+will fork a child from parent 4.
+72
+in alloc_proc. user frame 0x0000000087b19000, user stack 0x000000007ffff000, user kstack 0x0000000087b18000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087b16000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 72 to ready queue.
+User call fork.
+will fork a child from parent 4.
+73
+in alloc_proc. user frame 0x0000000087b0b000, user stack 0x000000007ffff000, user kstack 0x0000000087b0a000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087b08000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 73 to ready queue.
+User call fork.
+will fork a child from parent 4.
+74
+in alloc_proc. user frame 0x0000000087afd000, user stack 0x000000007ffff000, user kstack 0x0000000087afc000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087afa000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 74 to ready queue.
+User call fork.
+will fork a child from parent 4.
+75
+in alloc_proc. user frame 0x0000000087aef000, user stack 0x000000007ffff000, user kstack 0x0000000087aee000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087aec000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 75 to ready queue.
+User call fork.
+will fork a child from parent 4.
+76
+in alloc_proc. user frame 0x0000000087ae1000, user stack 0x000000007ffff000, user kstack 0x0000000087ae0000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087ade000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 76 to ready queue.
+User call fork.
+will fork a child from parent 4.
+77
+in alloc_proc. user frame 0x0000000087ad3000, user stack 0x000000007ffff000, user kstack 0x0000000087ad2000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087ad0000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 77 to ready queue.
+User call fork.
+will fork a child from parent 4.
+78
+in alloc_proc. user frame 0x0000000087ac5000, user stack 0x000000007ffff000, user kstack 0x0000000087ac4000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087ac2000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 78 to ready queue.
+User call fork.
+will fork a child from parent 4.
+79
+in alloc_proc. user frame 0x0000000087ab7000, user stack 0x000000007ffff000, user kstack 0x0000000087ab6000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087ab4000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 79 to ready queue.
+User call fork.
+will fork a child from parent 4.
+80
+in alloc_proc. user frame 0x0000000087aa9000, user stack 0x000000007ffff000, user kstack 0x0000000087aa8000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087aa6000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 80 to ready queue.
+User call fork.
+will fork a child from parent 4.
+81
+in alloc_proc. user frame 0x0000000087a9b000, user stack 0x000000007ffff000, user kstack 0x0000000087a9a000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087a98000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 81 to ready queue.
+User call fork.
+will fork a child from parent 4.
+82
+in alloc_proc. user frame 0x0000000087a8d000, user stack 0x000000007ffff000, user kstack 0x0000000087a8c000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087a8a000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 82 to ready queue.
+User call fork.
+will fork a child from parent 4.
+83
+in alloc_proc. user frame 0x0000000087a7f000, user stack 0x000000007ffff000, user kstack 0x0000000087a7e000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087a7c000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 83 to ready queue.
+User call fork.
+will fork a child from parent 4.
+84
+in alloc_proc. user frame 0x0000000087a71000, user stack 0x000000007ffff000, user kstack 0x0000000087a70000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087a6e000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 84 to ready queue.
+User call fork.
+will fork a child from parent 4.
+85
+in alloc_proc. user frame 0x0000000087a63000, user stack 0x000000007ffff000, user kstack 0x0000000087a62000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087a60000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 85 to ready queue.
+User call fork.
+will fork a child from parent 4.
+86
+in alloc_proc. user frame 0x0000000087a55000, user stack 0x000000007ffff000, user kstack 0x0000000087a54000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087a52000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 86 to ready queue.
+User call fork.
+will fork a child from parent 4.
+87
+in alloc_proc. user frame 0x0000000087a47000, user stack 0x000000007ffff000, user kstack 0x0000000087a46000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087a44000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 87 to ready queue.
+User call fork.
+will fork a child from parent 4.
+88
+in alloc_proc. user frame 0x0000000087a39000, user stack 0x000000007ffff000, user kstack 0x0000000087a38000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087a36000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 88 to ready queue.
+User call fork.
+will fork a child from parent 4.
+89
+in alloc_proc. user frame 0x0000000087a2b000, user stack 0x000000007ffff000, user kstack 0x0000000087a2a000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087a28000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 89 to ready queue.
+User call fork.
+will fork a child from parent 4.
+90
+in alloc_proc. user frame 0x0000000087a1d000, user stack 0x000000007ffff000, user kstack 0x0000000087a1c000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087a1a000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 90 to ready queue.
+User call fork.
+will fork a child from parent 4.
+91
+in alloc_proc. user frame 0x0000000087a0f000, user stack 0x000000007ffff000, user kstack 0x0000000087a0e000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087a0c000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 91 to ready queue.
+User call fork.
+will fork a child from parent 4.
+92
+in alloc_proc. user frame 0x0000000087a01000, user stack 0x000000007ffff000, user kstack 0x0000000087a00000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x00000000879fe000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 92 to ready queue.
+User call fork.
+will fork a child from parent 4.
+93
+in alloc_proc. user frame 0x00000000879f3000, user stack 0x000000007ffff000, user kstack 0x00000000879f2000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x00000000879f0000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 93 to ready queue.
+User call fork.
+will fork a child from parent 4.
+94
+in alloc_proc. user frame 0x00000000879e5000, user stack 0x000000007ffff000, user kstack 0x00000000879e4000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x00000000879e2000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 94 to ready queue.
+User call fork.
+will fork a child from parent 4.
+95
+in alloc_proc. user frame 0x00000000879d7000, user stack 0x000000007ffff000, user kstack 0x00000000879d6000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x00000000879d4000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 95 to ready queue.
+User call fork.
+will fork a child from parent 4.
+96
+in alloc_proc. user frame 0x00000000879c9000, user stack 0x000000007ffff000, user kstack 0x00000000879c8000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x00000000879c6000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 96 to ready queue.
+User call fork.
+will fork a child from parent 4.
+97
+in alloc_proc. user frame 0x00000000879bb000, user stack 0x000000007ffff000, user kstack 0x00000000879ba000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x00000000879b8000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 97 to ready queue.
+User call fork.
+will fork a child from parent 4.
+98
+in alloc_proc. user frame 0x00000000879ad000, user stack 0x000000007ffff000, user kstack 0x00000000879ac000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x00000000879aa000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 98 to ready queue.
+User call fork.
+will fork a child from parent 4.
+99
+in alloc_proc. user frame 0x000000008799f000, user stack 0x000000007ffff000, user kstack 0x000000008799e000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x000000008799c000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 99 to ready queue.
+User call fork.
+will fork a child from parent 4.
+100
+in alloc_proc. user frame 0x0000000087991000, user stack 0x000000007ffff000, user kstack 0x0000000087990000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x000000008798e000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 100 to ready queue.
+User call fork.
+will fork a child from parent 4.
+101
+in alloc_proc. user frame 0x0000000087983000, user stack 0x000000007ffff000, user kstack 0x0000000087982000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087980000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 101 to ready queue.
+User call fork.
+will fork a child from parent 4.
+102
+in alloc_proc. user frame 0x0000000087975000, user stack 0x000000007ffff000, user kstack 0x0000000087974000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087972000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 102 to ready queue.
+User call fork.
+will fork a child from parent 4.
+103
+in alloc_proc. user frame 0x0000000087967000, user stack 0x000000007ffff000, user kstack 0x0000000087966000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087964000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 103 to ready queue.
+User call fork.
+will fork a child from parent 4.
+104
+in alloc_proc. user frame 0x0000000087959000, user stack 0x000000007ffff000, user kstack 0x0000000087958000 
+FS: created a file management struct for a process.
+in alloc_proc. build proc_file_management successfully.
+stack_segment:0x000000007fffe000 0x0000000087956000
+do_fork map code segment at pa:0000000087ec2000 of parent to child at va:0000000000010000.
+going to insert process 104 to ready queue.
+hartid=0 User exit with code:0.
+going to insert process 0 to ready queue.
+hartid=0 going to schedule process 5 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087947000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087946000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 6 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087944000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087943000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 7 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087941000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087940000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 8 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008793e000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008793d000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 9 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008793b000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008793a000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 10 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087938000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087937000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 11 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087935000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087934000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 12 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087932000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087931000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 13 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008792f000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008792e000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 14 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008792c000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008792b000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 15 to run.
 hartid=0  Ticks 0
+handle_page_fault: 0000000000011e20
+hartid=1  Ticks 0
+hartid=2  Ticks 0
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087929000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087928000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+hartid=3  Ticks 0
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 16 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087926000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087925000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 17 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087923000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087922000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 18 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087920000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008791f000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 19 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008791d000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008791c000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 20 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008791a000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087919000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 21 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087917000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087916000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 22 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087914000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087913000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 23 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087911000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087910000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 24 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008790e000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008790d000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 25 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008790b000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008790a000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 26 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087908000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087907000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 27 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087905000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087904000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 28 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087902000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087901000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 29 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878ff000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878fe000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 30 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878fc000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878fb000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 31 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878f9000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878f8000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 32 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878f6000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878f5000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 33 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878f3000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878f2000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 34 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878f0000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878ef000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 35 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878ed000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878ec000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 36 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878ea000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878e9000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 37 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878e7000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878e6000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 38 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878e4000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878e3000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 39 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878e1000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878e0000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 40 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878de000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878dd000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 41 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878db000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878da000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 42 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878d8000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878d7000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 43 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878d5000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878d4000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 44 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878d2000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878d1000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 45 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878cf000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878ce000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 46 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878cc000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878cb000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 47 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878c9000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878c8000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 48 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878c6000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878c5000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 49 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878c3000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878c2000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 50 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878c0000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878bf000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 51 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878bd000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878bc000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 52 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878ba000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878b9000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 53 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878b7000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878b6000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 54 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878b4000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878b3000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 55 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878b1000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878b0000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+hartid=1  Ticks 1
+going to insert process 1 to ready queue.
+hartid=1 going to schedule process 1 to run.
+hartid=2  Ticks 1
+going to insert process 2 to ready queue.
+hartid=2 going to schedule process 2 to run.
+hartid=3  Ticks 1
+going to insert process 3 to ready queue.
+hartid=3 going to schedule process 3 to run.
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0  Ticks 1
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 56 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878ae000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878ad000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 57 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878ab000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878aa000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 58 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878a8000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878a7000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 59 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878a5000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878a4000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 60 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x00000000878a2000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x00000000878a1000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 61 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008789f000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008789e000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 62 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008789c000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008789b000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 63 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087899000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087898000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 64 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087896000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087895000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 65 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087893000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087892000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 66 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087890000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008788f000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 67 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008788d000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008788c000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 68 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008788a000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087889000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 69 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087887000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087886000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 70 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087884000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087883000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 71 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087881000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087880000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 72 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008787e000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008787d000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 73 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008787b000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008787a000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 74 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087878000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087877000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 75 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087875000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087874000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 76 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087872000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087871000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 77 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008786f000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008786e000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 78 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008786c000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008786b000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 79 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087869000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087868000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 80 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087866000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087865000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 81 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087863000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087862000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 82 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087860000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008785f000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 83 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008785d000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008785c000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 84 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008785a000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087859000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 85 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087857000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087856000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 86 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087854000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087853000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 87 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087851000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087850000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 88 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008784e000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008784d000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 89 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008784b000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008784a000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 90 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087848000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087847000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 91 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087845000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087844000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 92 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087842000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087841000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 93 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008783f000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008783e000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 94 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008783c000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008783b000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 95 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087839000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087838000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 96 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087836000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087835000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+hartid=1  Ticks 2
+hartid=2  Ticks 2
+hartid=3  Ticks 2
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0  Ticks 2
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 97 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087833000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087832000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 98 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087830000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008782f000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 99 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008782d000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008782c000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 100 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008782a000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087829000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 101 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087827000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087826000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 102 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087824000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087823000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 103 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x0000000087821000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x0000000087820000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 104 to run.
+handle_page_fault: 0000000000011e20
+Application: /bin/echo
+off 0
+4096 3580 5 3580 0 0x0000000000010000 1 0x0000000000010000
+va is 0x0000000000010000
+size is 3580
+offset is 0x0000000000000000
+alloc pa:0x000000008781e000
+nb is 3580
+offset is 0
+
+CODE_SEGMENT added at mapped info offset:4
+off 3584
+4096 0 6 16 3584 0x0000000000011e00 1 0x0000000000011e00
+va is 0x0000000000011e00
+size is 16
+offset is 0x0000000000000e00
+alloc pa:0x000000008781d000
+nb is 16
+offset is 3584
+
+DATA_SEGMENT added at mapped info offset:5
+debug size is 6621
+Application program entry point (virtual address): 0x00000000000100b0
+hartid=0 User exit with code:0.
+hartid=0 going to schedule process 0 to run.
+hartid=0  Ticks 3
+hartid=1  Ticks 3
+going to insert process 1 to ready queue.
+hartid=1 going to schedule process 1 to run.
+hartid=2  Ticks 3
+going to insert process 2 to ready queue.
+hartid=2 going to schedule process 2 to run.
+hartid=3  Ticks 3
+going to insert process 3 to ready queue.
+hartid=3 going to schedule process 3 to run.
+hartid=0  Ticks 4
+going to insert process 0 to ready queue.
+hartid=0 going to schedule process 0 to run.
+hartid=1  Ticks 4
+hartid=2  Ticks 4
+hartid=3  Ticks 4
+hartid=0  Ticks 5
+hartid=1  Ticks 5
+going to insert process 1 to ready queue.
+hartid=1 going to schedule process 1 to run.
+hartid=2  Ticks 5
+going to insert process 2 to ready queue.
+hartid=2 going to schedule process 2 to run.
+hartid=3  Ticks 5
+going to insert process 3 to ready queue.
+hartid=3 going to schedule process 3 to run.

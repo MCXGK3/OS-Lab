@@ -17,7 +17,7 @@ static void handle_misaligned_store() {panic("Misaligned AMO!"); }
 
 // added @lab1_3
 static void handle_timer() {
-  int cpuid = 0;
+  int cpuid = read_tp();
   // setup the timer fired at next time (TIMER_INTERVAL from now)
   *(uint64*)CLINT_MTIMECMP(cpuid) = *(uint64*)CLINT_MTIMECMP(cpuid) + TIMER_INTERVAL;
 
@@ -29,6 +29,8 @@ static void handle_timer() {
 void debug(int mcause){
   sprint("mcause is %d\n",mcause);
   uint64 epc=read_csr(mepc);
+  uint64 mtval=read_csr(mtval);
+  sprint("mtval is %p\n",mtval);
   for(int i=0;i<current[read_tp()]->line_ind;i++){
     if(epc==(current[read_tp()]->line+i)->addr){
       addr_line temp=*(current[read_tp()]->line+i);
@@ -94,6 +96,7 @@ void handle_mtrap() {
       break;
 
     default:
+      debug(mcause);
       sprint("machine trap(): unexpected mscause %p\n", mcause);
       sprint("            mepc=%p mtval=%p\n", read_csr(mepc), read_csr(mtval));
       panic( "unexpected exception happened in M-mode.\n" );

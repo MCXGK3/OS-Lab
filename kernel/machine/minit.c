@@ -98,7 +98,7 @@ void m_start(uintptr_t hartid, uintptr_t dtb) {
   // sprint is also defined in spike_interface/spike_utils.c
   if(hartid==0){
   spike_file_init();
-  spike_file_unlink("output.log");
+  spike_file_unlink("output.log",0);
   output=spike_file_open("output.log",O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
   // init HTIF (Host-Target InterFace) and memory by using the Device Table Blob (DTB)
   // init_dtb() is defined above.

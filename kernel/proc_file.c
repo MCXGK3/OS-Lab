@@ -40,6 +40,7 @@ void fs_init(void) {
 //
 proc_file_management *init_proc_file_management(void) {
   proc_file_management *pfiles = (proc_file_management *)alloc_page();
+  memset(pfiles,0,PGSIZE);
   pfiles->cwd = vfs_root_dentry; // by default, cwd is the root
   pfiles->nfiles = 0;
 
@@ -111,7 +112,7 @@ int do_read(int fd, char *buf, uint64 count) {
 
   char buffer[count + 1];
   int len = vfs_read(pfile, buffer, count);
-  //sprint("count is %d",count);
+  // printerr("len is %d",len);
   buffer[count] = '\0';
   strcpy(buf, buffer);
   return len;
@@ -159,7 +160,9 @@ int do_disk_stat(int fd, struct istat *istat) {
 //
 int do_close(int fd) {
   struct file *pfile = get_opened_file(fd);
-  return vfs_close(pfile);
+  int ret=vfs_close(pfile);
+  if(!ret) current[read_tp()]->pfiles->nfiles--;
+  return ret;
 }
 
 //

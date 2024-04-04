@@ -94,6 +94,8 @@
 
 #define AT_FDCWD -100
 
+#define AT_REMOVEDIR 0x200
+
 extern uint64 htif;
 void query_htif(uint64 dtb);
 

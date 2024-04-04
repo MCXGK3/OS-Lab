@@ -23,6 +23,9 @@
 
 int exit_barrier=0;
 
+int procstatus=0;
+int shouldshutdown=0;
+
 int sem_light[32];
 int semnum=0;
 process* sem_pro[32];
@@ -32,9 +35,20 @@ spinlock_t sem_lock=SPINLOCK_INIT;
 
 spinlock_t task_lock=SPINLOCK_INIT;
 
+
+ssize_t sys_user_procstatus(int status){
+  procstatus=status;
+  return 0;
+}
+
+ssize_t sys_user_getstatus(){
+  return procstatus;
+}
 ssize_t sys_user_checktask(){
+  if(task!=NULL) return 1;
+  if(shouldshutdown) return -1;
   if(task==NULL) return 0;
-  else return 1;
+  return 0;
 }
 
 ssize_t sys_user_gettask(){
@@ -55,6 +69,9 @@ ssize_t sys_user_gettask(){
 
 ssize_t sys_user_puttask(int pid){
   int tp=read_tp();
+  // for(int i=0;i<NCPU;i++){
+  //   printerr("hart%d   %d\n",i,current[i]->pid);
+  // }
   spinlock_lock(&task_lock);
   process* newtask=ready_queue_head[tp];
   bool flag=0;
@@ -126,7 +143,7 @@ ssize_t sys_user_print(const char* buf, size_t n,bool with_hartid) {
 //
 ssize_t sys_user_exit(uint64 code) {
   int tp=read_tp();
-  sprint("User exit with code:%d.\n", code);
+  sprint("hartid=%d User exit with code:%d.\n",tp,code);
   // reclaim the current process, and reschedule. added @lab3_1
   process *parent=current[tp]->parent;
   if(current[tp]->wait){
@@ -134,6 +151,7 @@ ssize_t sys_user_exit(uint64 code) {
   }
 
   free_process( current[read_tp()] );
+  realloc_proc(current[read_tp()],1);
   schedule();
   return 0;
 }
@@ -329,14 +347,17 @@ ssize_t sys_user_exec(const char* pathname,int n,char ** paraname){
   for(int i=0;i<n;i++){
     char **paraspa=(char **)user_va_to_pa(current[tp]->pagetable,(void*)(paraname+i));
     char *parapa=(char*)user_va_to_pa(current[tp]->pagetable,*paraspa);
+    // printerr("%s\n",paraspa);
+    // printerr("%p %p\n",*paraspa,parapa);
     strcpy(para[i],parapa);
   }
   
   strcpy(path,pathpa);
-  realloc_proc(current[read_tp()]);
+  realloc_proc(current[read_tp()],0);
   int ret=load_other_program_with_para(current[tp],path);
   if(ret==-1){
-    printerr("Execute Failed\n");
+    sys_user_procstatus(-1);
+    printerr("%s:No Such Command!!!\n",path);
     sys_user_exit(0); 
     return 0;}
   char** prava=(char**)sys_user_allocate_page();
@@ -468,6 +489,22 @@ ssize_t sys_user_ccwd(char * pathva){
   //sprint("%s %d\n",pathpa,i);
   return do_ccwd(pathpa);
 }
+
+ssize_t sys_user_kill(int pid){
+  return do_kill(pid);
+}
+
+ssize_t sys_user_shutdown(){
+  shouldshutdown=1;
+  return 0;
+}
+
+ssize_t sys_user_ps(){
+  do_ps();
+  return 0;
+}
+
+
 //
 // [a0]: the syscall number; [a1] ... [a7]: arguments to the syscalls.
 // returns the code of success, (e.g., 0 means success, fail for otherwise)
@@ -545,6 +582,16 @@ long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, long a6, l
       return sys_user_checktask();
     case SYS_user_gettask:
       return sys_user_gettask();
+    case SYS_user_kill:
+      return sys_user_kill(a1);
+    case SYS_user_procstatus:
+      return sys_user_procstatus(a1);
+    case SYS_user_getstatus:
+      return sys_user_getstatus();
+    case SYS_user_shutdown:
+      return sys_user_shutdown();
+    case SYS_user_ps:
+      return sys_user_ps();
     default:
       panic("Unknown syscall %ld \n", a0);
   }

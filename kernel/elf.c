@@ -32,7 +32,7 @@ static uint64 elf_fpread(elf_ctx *ctx, void *dest, uint64 nb, uint64 offset) {
 // the implementation of allocater. allocates memory space for later segment loading.
 // this allocater is heavily modified @lab2_1, where we do NOT work in bare mode.
 //
-static void elf_alloc_mb(elf_ctx *ctx, uint64 elf_pa, uint64 elf_va, uint64 size,uint64 offset) {
+static int elf_alloc_mb(elf_ctx *ctx, uint64 elf_pa, uint64 elf_va, uint64 size,uint64 offset) {
   elf_info *msg = (elf_info *)ctx->info;
   sprint("va is %p\nsize is %d\noffset is %p\n",elf_va,size,offset);
   // we assume that size of proram segment is smaller than a page.
@@ -49,6 +49,7 @@ static void elf_alloc_mb(elf_ctx *ctx, uint64 elf_pa, uint64 elf_va, uint64 size
   sprint("alloc pa:%p\n",pa);
   if (pa == 0) panic("uvmalloc mem alloc falied\n");
   memset((void *)pa, 0, PGSIZE);
+  // printerr("first is %p\n",first);
   user_vm_map((pagetable_t)msg->p->pagetable, first, PGSIZE, (uint64)pa,
          prot_to_type(PROT_WRITE | PROT_READ | PROT_EXEC, 1));
   if(i==1) in_offset=elf_va%PGSIZE;
@@ -64,7 +65,7 @@ static void elf_alloc_mb(elf_ctx *ctx, uint64 elf_pa, uint64 elf_va, uint64 size
   sprint("\n");
   offset+=nb;
 }
-  return;
+  return i;
 }
 
 
@@ -104,7 +105,7 @@ elf_status elf_load(elf_ctx *ctx) {
     // allocate memory block before elf loading
     sprint("off %d\n",ph_addr.off);
     sprint("%d %d %d %d %d %p %d %p\n",ph_addr.align,ph_addr.filesz,ph_addr.flags,ph_addr.memsz,ph_addr.off,ph_addr.paddr,ph_addr.type,ph_addr.vaddr);
-    elf_alloc_mb(ctx, ph_addr.vaddr, ph_addr.vaddr, ph_addr.memsz,ph_addr.off);
+    int pages=elf_alloc_mb(ctx, ph_addr.vaddr, ph_addr.vaddr, ph_addr.memsz,ph_addr.off);
 
     // actual loading
     // if (elf_fpread(ctx, dest, ph_addr.memsz, ph_addr.off) != ph_addr.memsz)
@@ -116,7 +117,7 @@ elf_status elf_load(elf_ctx *ctx) {
       if( (process*)(((elf_info*)(ctx->info))->p)->mapped_info[j].va == 0x0 ) break;
 
     ((process*)(((elf_info*)(ctx->info))->p))->mapped_info[j].va = ph_addr.vaddr;
-    ((process*)(((elf_info*)(ctx->info))->p))->mapped_info[j].npages = 1;
+    ((process*)(((elf_info*)(ctx->info))->p))->mapped_info[j].npages = pages;
 
     // SEGMENT_READABLE, SEGMENT_EXECUTABLE, SEGMENT_WRITABLE are defined in kernel/elf.h
     if( ph_addr.flags == (SEGMENT_READABLE|SEGMENT_EXECUTABLE) ){
@@ -370,7 +371,7 @@ void load_bincode_from_host_elf(process *p, char *filename) {
   // init elfloader context. elf_init() is defined above.
   if (elf_init(&elfloader, &info) != EL_OK)
     panic("fail to init elfloader.\n");
-
+  get_base_name(filename,p->appname);
   // load elf. elf_load() is defined above.
   if (elf_load(&elfloader) != EL_OK) panic("Fail on loading elf.\n");
 
@@ -402,7 +403,7 @@ int load_bincode_from_other_elf_with_para(process* proc,char *pathname){
   // init elfloader context. elf_init() is defined above.
   if (elf_init(&elfloader, &info) != EL_OK)
     panic("fail to init elfloader.\n");
-
+   get_base_name(pathname,proc->appname);
   // load elf. elf_load() is defined above.
   if (elf_load(&elfloader) != EL_OK) panic("Fail on loading elf.\n");
 

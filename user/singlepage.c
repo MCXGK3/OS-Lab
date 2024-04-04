@@ -21,6 +21,7 @@ int main(void) {
   char *p = (char *)better_malloc(50);
   printu("m=%p\np=%p\n",m,p);
   if((uint64)p - (uint64)m > 512 ){
+    setstatus(-1);
     printu("you need to manage the vm space precisely!");
     exit(-1);
   }
@@ -33,6 +34,7 @@ int main(void) {
   for(int i=0;i<100;i++) better_free(te[i]);
   if(m != n)
   {
+    setstatus(-1);
     printu("your malloc is not complete.\n");
     exit(-1);
   }

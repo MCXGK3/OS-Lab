@@ -44,7 +44,9 @@ int spike_file_stat(spike_file_t* f, struct stat* s) {
 }
 
 int spike_file_close(spike_file_t* f) {
+  // printerr("try to free %p\n",f);
   if (!f) return -1;
+  // printerr("kfd:%d refcnt:%d\n",f->kfd,f->refcnt);
   spike_file_t* old = atomic_cas(&spike_fds[f->kfd], f, 0);
   spike_file_decref(f);
   if (old != f) return -1;
@@ -53,13 +55,17 @@ int spike_file_close(spike_file_t* f) {
 }
 
 void spike_file_decref(spike_file_t* f) {
-  if (atomic_add(&f->refcnt, -1) == 2) {
+  // printerr("now f->refcnt=%d\n",f->refcnt);
+  // printerr("%d\n",atomic_add(&(f->refcnt), -1));
+  atomic_add(&(f->refcnt), -1);
+  if ( f->refcnt == 2) {
+    // printerr("finalfree %p\n",f);
     int kfd = f->kfd;
     mb();
     atomic_set(&f->refcnt, 0);
-
     frontend_syscall(HTIFSYS_close, kfd, 0, 0, 0, 0, 0, 0);
   }
+  // printerr("next f->refcnt=%d\n",f->refcnt);
 }
 
 void spike_file_incref(spike_file_t* f) {
@@ -74,7 +80,9 @@ ssize_t spike_file_write(spike_file_t* f, const void* buf, size_t size) {
 static spike_file_t* spike_file_get_free(void) {
   for (spike_file_t* f = spike_files; f < spike_files + MAX_FILES; f++)
     if (atomic_read(&f->refcnt) == 0 && atomic_cas(&f->refcnt, 0, INIT_FILE_REF) == 0)
-      return f;
+    {
+      // printerr("get free %p\n",f);
+      return f;}
   return NULL;
 }
 
@@ -162,7 +170,7 @@ ssize_t spike_file_readdir(void* name,int offset,char* buf){
 }
 
 
-ssize_t spike_file_unlink(void* name){
+ssize_t spike_file_unlink(void* name,int flag){
   int size=strlen(name)+1;
-  return frontend_syscall(HTIFSYS_unlinkat,AT_FDCWD,(uint64)name,size,0,0,0,0);
+  return frontend_syscall(HTIFSYS_unlinkat,AT_FDCWD,(uint64)name,size,flag,0,0,0);
 }

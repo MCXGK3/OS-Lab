@@ -9,8 +9,10 @@ void pwd() {
 }
 
 void cd(const char *path) {
-  if (change_cwd(path) != 0)
+  if (change_cwd(path) != 0){
+    setstatus(-1);
     printu("cd failed\n");
+  }
 }
 
 int main(int argc, char *argv[]) {

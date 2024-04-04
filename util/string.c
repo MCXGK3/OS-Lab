@@ -62,25 +62,37 @@ char* strcpy(char* dest, const char* src) {
   return dest;
 }
 
-char *strchr(const char *p, int ch)
+// char *strchr(const char *p, int ch)
+// {
+// 	char c;
+// 	c = ch;
+// 	for (;; ++p) {
+// 		if (*p == c)
+// 			return ((char *)p);
+// 		if (*p == '\0')
+// 			return (NULL);
+// 	}
+// }
+
+char *strchr(const char *p, char* ch)
 {
 	char c;
-	c = ch;
-	for (;; ++p) {
-		if (*p == c)
-			return ((char *)p);
-		if (*p == '\0')
-			return (NULL);
+	for (;; ++p,++ch) {
+    if (*p == '\0')
+			return ((char*)p);
+    if(*ch=='\0')
+      return (NULL);
+		if (*p != *ch)
+      return (NULL);
 	}
 }
-
 char* strtok(char* str, const char* delim) {
   static char* current;
   if (str != NULL) current = str;
   if (current == NULL) return NULL;
 
   char* start = current;
-  while (*start != '\0' && strchr(delim, *start) != NULL) start++;
+  while (*start != '\0' && strchr(delim, start) != NULL) start++;
 
   if (*start == '\0') {
     current = NULL;
@@ -88,11 +100,11 @@ char* strtok(char* str, const char* delim) {
   }
 
   char* end = start;
-  while (*end != '\0' && strchr(delim, *end) == NULL) end++;
+  while (*end != '\0' && strchr(delim, end) == NULL) end++;
 
   if (*end != '\0') {
     *end = '\0';
-    current = end + 1;
+    current = end + strlen(delim);
   } else
     current = NULL;
   return start;

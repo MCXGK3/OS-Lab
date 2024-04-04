@@ -43,6 +43,7 @@ void free_page(void *pa) {
 
   // insert a physical page to g_free_mem_list
   list_node *n = (list_node *)pa;
+  // memset(pa,0,PGSIZE);
   n->next = g_free_mem_list.next;
   g_free_mem_list.next = n;
 }

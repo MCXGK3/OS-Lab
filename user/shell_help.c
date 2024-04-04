@@ -5,14 +5,20 @@
 int main(int argc, char *argv[]) {
     while (1)
     {
-        while (!checktask())
+        int t;
+        while (!(t=checktask()))
         {
+        // print_with_hartid("checking\n");
         }
-        printu("checktask\n");
+        if(t==-1) break;
+        // print_with_hartid("checktask\n");
         int pid=gettask();
-        printu("pid=%d\n",pid);
-        wait(pid);
+        // print_with_hartid("pid=%d\n",pid);
+        if(pid>=0) wait(pid);
+        // kill(pid);
+        
     }
+    print_with_hartid("Exiting\n");
     
     exit(0);
     return 0;

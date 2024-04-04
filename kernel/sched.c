@@ -45,6 +45,7 @@ void insert_to_ready_queue( process* proc ) {
 extern process procs[NPROC];
 void schedule() {
   if ( !ready_queue_head [read_tp()]){
+    // printerr("hartid%d shutdown\n",read_tp());
     sync_barrier(&shutdown_barrier,NCPU);
     // by default, if there are no ready process, and all processes are in the status of
     // FREE and ZOMBIE, we should shutdown the emulated RISC-V machine.
@@ -74,7 +75,7 @@ void schedule() {
   ready_queue_head[read_tp()] = ready_queue_head[read_tp()]->queue_next;
 
   current[read_tp()]->status = RUNNING;
-  sprint( "going to schedule process %d to run.\n", current[read_tp()]->pid );
+  sprint( "hartid=%d going to schedule process %d to run.\n", read_tp(),current[read_tp()]->pid );
   switch_to( current[read_tp()] );
 }
 

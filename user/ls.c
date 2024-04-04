@@ -3,8 +3,17 @@
 #include "util/types.h"
 
 int main(int argc, char *argv[]) {
-  int dir_fd = opendir_u(".");
-  printu("%d\n",dir_fd);
+  int dir_fd;
+  if(argc<=0)
+  dir_fd = opendir_u(".");
+  else{
+    dir_fd=opendir_u(argv[0]);
+  }
+  if(dir_fd<0){
+    setstatus(-1);
+    printu("Open Failed\n");
+    exit(0);
+  }
   printu("---------- ls command -----------\n");
   printu("ls \"%s\":\n", ".");
   printu("[name]               [inode_num]\n");
@@ -18,10 +27,16 @@ int main(int argc, char *argv[]) {
     if (strlen(dir.name) < width) {
       strcpy(name, dir.name);
       name[strlen(dir.name)] = ' ';
-      printu("%s %d\n", name, dir.inum);
+      if(dir.type==DIR_I)
+      printu("\33[34m%s\33[37m %d\n", name, dir.inum);
+      else 
+      printu("%s %d\n",name, dir.inum);
     }
     else
-      printu("%s %d\n", dir.name, dir.inum);
+      if(dir.type==DIR_I)
+      printu("\33[34m%s\33[37m %d\n", dir.name, dir.inum);
+      else
+      printu("%s %d\n",dir.name,dir.inum);
   }
   printu("------------------------------\n");
   closedir_u(dir_fd);
